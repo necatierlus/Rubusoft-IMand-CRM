@@ -1,0 +1,414 @@
+﻿@model BidCustomerApprovalModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Rubusoft | CRM</title>
+    <meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+    <meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular 11, VueJs, React, Laravel, admin themes, web design, figma, web development, ree admin themes, bootstrap admin, bootstrap dashboard" />
+    <link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+</head>
+<body>
+
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container">
+            <!--begin::Hidden-->
+            <input type="hidden" asp-for="@Model.bid.IdKod" name="BidIdKod" />
+            <input type="hidden" asp-for="@Model.bid.BidStatus" name="BidStatus" />
+            <!--end::Hidden-->
+            <div class="card">
+                <!--begin::Card body-->
+                <div class="card-body p-0">
+                    <img class="demo-bg" src="/assets/media/appsettings/rubusoft_filigran.png" alt="" style="position: absolute;opacity: 0.1;width: 99%;transform: rotate( 345deg );margin-top:400px;width: 830px;height: 818px;">
+                    <!--begin::Wrapper-->
+                    <div class="card-px py-5 my-5">
+                        <div style="width:100%; height:120px; display:flex;align-items:center;background-image: linear-gradient(to right, #fee9e9 , #fff)" class="text-inverse-light">
+                            <div style="width:210px;margin-left:10px;">
+                                <img src="~/assets/media/appsettings/@Model.appSetting.Logo" style="width:100%;border-radius:5px;" />
+                            </div>
+                            <div style="font-size:2.3rem;font-weight:bold;display:flex;flex-direction:column;justify-content:center; width:95%;">
+                                <span style="text-align:center;">@Model.appSetting.FirmName</span>
+                            </div>
+                        </div>
+                        <div style="height: 80px; width: 100%; display: flex; align-items: center; justify-content: center;">
+                            <div>
+                                <h2><u>PROFORMA</u></h2>
+                            </div>
+                        </div>
+                        <!--begin::Teklif detay bilgiler-->
+                        <div style="width:100%; height:350px; border:1px solid #fff;">
+                            <!--begin::Teklif bilgileri-->
+                            <div class="mb-5">
+                                <h3>Teklif Bilgileri</h3>
+                            </div>
+                            <div class="separator mb-5"></div>
+                            <div class="row fs-7">
+                                <div class="col-md-10 text-end fw-bold">
+                                    Teklif No
+                                </div>
+                                <div class="col-md-2">
+                                    @Model.bid.BidNumber
+                                </div>
+                            </div>
+                            <div class="row fs-7">
+                                <div class="col-md-10 text-end fw-bold">
+                                    Teklif Tarihi
+                                </div>
+                                <div class="col-md-2">
+                                    @Model.bid.BidDate.ToString("dd.MM.yyyy")
+                                </div>
+                            </div>
+                            <div class="row fs-7">
+                                <div class="col-md-10 text-end fw-bold">
+                                    Teklif Geçerlilik Tarihi
+                                </div>
+                                <div class="col-md-2">
+                                    @Model.bid.BidValidityDate.ToString("dd.MM.yyyy")
+                                </div>
+                            </div>
+                            <div class="row fs-7">
+                                <div class="col-md-2 fw-bold">
+                                    Yetkili
+                                </div>
+                                <div class="col-md-10">
+                                    @Model.createdPersonal.FirstName @Model.createdPersonal.LastName
+                                </div>
+                            </div>
+                            @if (Model.createdPersonal.PhoneNumber != null)
+                            {
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        Gsm
+                                    </div>
+                                    <div class="col-md-10">
+                                        +90 @Model.createdPersonal.PhoneNumber
+                                    </div>
+                                </div>
+                            }
+
+                            @if (Model.appSetting.PhoneNumber != null)
+                            {
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        Telefon
+                                    </div>
+                                    <div class="col-md-10">
+                                        +90 @Model.appSetting.PhoneNumber
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row fs-7">
+                                <div class="col-md-2 fw-bold">
+                                    E-mail
+                                </div>
+                                <div class="col-md-10">
+                                    @Model.createdPersonal.Email
+                                </div>
+                            </div>
+                            @if (Model.appSetting.TaxOffice != null)
+                            {
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        Vergi Dairesi
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Model.appSetting.TaxOffice
+                                    </div>
+                                </div>
+                            }
+
+                            @if (Model.appSetting.TaxNumber != null)
+                            {
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        Vergi Numarası
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Model.appSetting.TaxNumber
+                                    </div>
+                                </div>
+                            }
+
+                            <!--end::Teklif bilgileri-->
+                            <!--begin::Firma bilgileri-->
+                            <div class="mb-5 mt-10">
+                                <h3>Firma Bilgileri</h3>
+                            </div>
+                            <div class="separator mb-5"></div>
+                            <div class="row fs-7">
+                                <div class="col-md-2 fw-bold">
+                                    Firma Bilgisi
+                                </div>
+                                <div class="col-md-10">
+                                    @Model.firm.TradeName
+                                </div>
+                            </div>
+                            <div class="row fs-7">
+                                <div class="col-md-2 fw-bold">
+                                    İlgili Kişi
+                                </div>
+                                <div class="col-md-10">
+                                    @Model.firmManager.FirstName @Model.firmManager.LastName
+                                </div>
+                            </div>
+                            <div class="row fs-7">
+                                <div class="col-md-2 fw-bold">
+                                    E-mail
+                                </div>
+                                <div class="col-md-10">
+                                    @Model.firmManager.EMail
+                                </div>
+                            </div>
+                            <!--end::Firma bilgileri-->
+                        </div>
+                        <!--end::Teklif detay bilgiler-->
+                        <!--begin::Teklif açıklama-->
+                        <div style="width:100%; height:240px;display: flex; align-items: center; justify-content: center;">
+                            Sayın: @Model.firmManager.FirstName  @Model.firmManager.LastName
+                            <br /><br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firmamızdan teklif almakla göstermiş olduğunuz ilgi ve güvene öncelikle teşekkür ederiz. İhtiyacınız olan ürün/ürünler ile ilgili istemiş olduğunuz fiyat teklifimiz aşağıda bilginize sunulmaktadır.
+                        </div>
+                        <!--end::Teklif açıklama-->
+                        <!--begin::Ürün bilgileri-->
+                        <div id="ProductList">
+                        </div>
+                        <!--end::Ürün bilgileri-->
+                        <!--begin::Ürün detay bilgileri-->
+                        <div id="ProductDetailList">
+
+                        </div>
+                        <!--end::Ürün bilgileri-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+    <!--begin::Javascript-->
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <!--end::Page Custom Javascript-->
+    <!--end::Javascript-->
+</body>
+</html>
+<script>
+
+    $(function () {
+        debugger;
+        var bid =@Html.Raw(Json.Serialize(Model.bid));
+        var bidProduct =@Html.Raw(Json.Serialize(Model.bidProductDetailList));
+        var appSetting =@Html.Raw(Json.Serialize(Model.appSetting));
+        console.log(appSetting);
+        var firstPage = true;
+        var pageHeight;
+        var html = ``;
+        var newPage = true;
+        var totalCount = bidProduct.length;
+        for (var i = 1; i <= totalCount; i++) {
+            debugger;
+            if (newPage) {
+                if (firstPage) {
+                    pageHeight = 525;
+                    html += `<div style="width:100%; height:${pageHeight}px; border:1px solid #fff;">`;
+                } else {
+                    pageHeight = 1380;
+                    html += `<div style="width:100%; height:${pageHeight}px; border:1px solid #fff;padding-top:100px;">`;
+                    html += `<img class="demo-bg" src="/assets/media/appsettings/rubusoft_filigran.png" alt="" style="position: absolute;opacity: 0.1;width: 99%;transform: rotate( 345deg );margin-top:400px;width: 830px;height: 818px;">`;
+                    //begin:Başlık
+                    html += `<div style="width:100%; height:120px; display:flex;align-items:center;background-image: linear-gradient(to right, #fee9e9 , #fff);" class="text-inverse-light">`;
+                    html += `<div style="width:210px;margin-left:10px;">`;
+                    html += `<img src="/assets/media/appsettings/${appSetting.logo}" style="width:100%;border-radius:5px;" />`;
+                    html += `</div>`;
+                    html += `<div style="font-size:2.3rem;font-weight:bold;display:flex;flex-direction:column;justify-content:center; width:95%;">`;
+                    html += `<span style="text-align:center;">${appSetting.firmName}</span>`;
+                    html += `</div>`;
+                    html += `</div>`;
+                    //end:Başlık
+                }
+                newPage = false;
+
+                //begin::İçerik
+
+
+                //begin:Ürünler başlık
+                html += `<div style="height: 20px; width: 100%; display: flex; align-items: center; justify-content: center;margin-top:40px;">`;
+                html += `<div><h4><u>ÜRÜN FİYAT LİSTESİ</u></h4></div>`;
+                html += `</div>`;
+                //end:Ürünler başlık
+
+                //begin:Tablo
+                html += `<table class="table table-striped gy-7 gs-7">`;
+                //begin:Tablo başlık
+                html += `<thead class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">`;
+                html += `<tr>`;
+                html += `<th class="min-w-90px">Ürün Kodu</th>`;
+                html += `<th class="min-w-350px">Ürün Adı</th>`;
+                html += `<th class="min-w-90px text-center">Adet</th>`;
+                if (bid.unitPriceIsShow) {
+                    html += `<th class="min-w-90px text-center">Birim Fiyat(₺)</th>`;
+                }
+                if (bid.discountIsShow) {
+                    html += `<th class="min-w-90px text-center">İskonto(%)</th>`;
+                }
+                if (bid.discountUnitPriceIsShow) {
+                    html += `<th class="min-w-90px text-center">İsk. B.Fiyat(₺)</th>`;
+                }
+                html += `<th class="min-w-90px text-center">Ara Toplam(₺)</th>`;
+                html += `</tr>`;
+                html += `</thead>`;
+                //end:Tablo başlık
+                //begin:Tablo içerik
+                html += `<tbody class="fs-6" id="tbodyProducts">`;
+            }
+
+            html += `<tr>`;
+            html += `<td>${bidProduct[i - 1].productCode}</td>`;
+            html += `<td>${bidProduct[i - 1].productName}</td>`;
+            html += `<td class="text-center">${bidProduct[i - 1].count}</td>`;
+            if (bid.unitPriceIsShow) {
+                html += `<td class="text-center">${ConvertToMoney(bidProduct[i - 1].unitPrice)}</td>`;
+            }
+            if (bid.discountIsShow) {
+                html += `<td class="text-center">${bidProduct[i - 1].discount}</td>`;
+            }
+            if (bid.discountUnitPriceIsShow) {
+                html += `<td class="text-center">${ConvertToMoney(bidProduct[i - 1].discountUnitPrice)}</td>`;
+            }
+            html += `<td class="text-center">${ConvertToMoney(bidProduct[i - 1].subTotal)}</td>`;
+            html += `</tr>`;
+
+            if (i % 4 == 0 && totalCount > 4 && totalCount <= 7) {
+                newPage = true;
+                firstPage = false;
+                html += `</tbody>`;
+                //end:Tablo içerik
+                html += `</table>`;
+                //end:Tablo
+                html += `</div>`;
+
+            }
+            else if (i % 7 == 0 && totalCount > 7 && firstPage == true) {
+                newPage = true;
+                firstPage = false;
+                html += `</tbody>`;
+                //end:Tablo içerik
+                html += `</table>`;
+                //end:Tablo
+                html += `</div>`;
+            }
+            else if ((i - 7) % 14 == 0 && i != totalCount && firstPage == false) {
+                newPage = true;
+                firstPage = false;
+                html += `</tbody>`;
+                html += `</table>`;
+
+                html += `</div>`;
+            }
+            else if (i == totalCount) {
+                html += `</tbody>`;
+                //end:Tablo içerik
+
+                html += `</table>`;
+                //end:Tablo
+                if (bid.generalTotalIsShow) {
+                    html += `<div class="row" style="height:15px;display:flex; align-items:center;">`;
+                    html += `<div class="col-md-8"></div>`;
+                    html += `<div class="col-md-2 text-end"><b>Toplam</b></div>`;
+                    html += `<div class="col-md-2 text-end">${ConvertToMoney(bid.totalPrice)}</div>`;
+                    html += `</div>`;
+                    html += `<div class="row">`;
+                    html += `<div class="col-md-9"></div>`;
+                    html += `<div class="col-md-3"><div class="separator mb-5 mt-5"></div></div>`;
+                    html += `</div>`;
+                }
+                if (bid.discountIsShow) {
+                    html += `<div class="row" style="height:15px;display:flex; align-items:center;">`;
+                    html += `<div class="col-md-8"></div>`;
+                    html += `<div class="col-md-2 text-end"><b>Toplam İskonto</b></div>`;
+                    html += `<div class="col-md-2 text-end">${ConvertToMoney(bid.totalDiscount)}</div>`;
+                    html += `</div>`;
+                    html += `<div class="row">`;
+                    html += `<div class="col-md-8"></div>`;
+                    html += `<div class="col-md-4"><div class="separator mb-5 mt-5"></div></div>`;
+                    html += `</div>`;
+                }
+                if (bid.generalTotalIsShow) {
+
+                    html += `<div class="row" style="height:15px;display:flex; align-items:center;">`;
+                    html += `<div class="col-md-8"></div>`;
+                    html += `<div class="col-md-2 text-end"><b>Genel Toplam</b></div>`;
+                    html += `<div class="col-md-2 text-end">${ConvertToMoney(bid.generalTotal)}</div>`;
+                    html += `</div>`;
+                }
+
+                html += `</div>`;
+                //end:İçerik
+
+
+            }
+
+        }
+        html += `<div style="width:100%; height:1380px; border:1px solid #fff;padding-top:100px">`;
+        html += `<img class="demo-bg" src="/assets/media/appsettings/rubusoft_filigran.png" alt="" style="position: absolute;opacity: 0.1;width: 99%;transform: rotate( 345deg );margin-top:400px;width: 830px;height: 818px;">`;
+        //begin:Başlık
+        html += `<div style="width:100%; height:120px; display:flex;align-items:center;background-image: linear-gradient(to right, #fee9e9 , #fff);" class="text-inverse-light">`;
+        html += `<div style="width:210px;margin-left:10px;">`;
+        html += `<img src="/assets/media/appsettings/${appSetting.logo}" style="width:100%;border-radius:5px;" />`;
+        html += `</div>`;
+        html += `<div style="font-size:2.3rem;font-weight:bold;display:flex;flex-direction:column;justify-content:center; width:95%;">`;
+        html += `<span style="text-align:center;">${appSetting.firmName}</span>`;
+        html += `</div>`;
+        html += `</div>`;
+        //end:Başlık
+
+        //begin::Genel Şartlar
+        html += `<div style="width: 100%; display: flex; justify-content: center;flex-direction:column;margin-top:40px;">`;
+        html += `<div><h4><u>Genel Şartlar</u></h4></div>`;
+        html += `<div>`;
+        html += `<span style="white-space:pre-wrap;">${bid.generalRequirements}</span><br/><br/><br/>`;
+        html += `<span>Saygılarımızla</span><br/>`;
+        html += `<span>${appSetting.firmName}</span><br/>`;
+        html += `</div>`;
+        html += `</div>`;
+        //end::Genel Şartlar
+        html += `</div>`;
+
+        $('#ProductList').html(html);
+
+
+    });
+
+    //Para formatına çevirme
+    function ConvertToMoney(value) {
+        var money = value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace(".", "#");
+        money = money.replace(",", ".").replace("#", ",")
+        return money;
+    }
+
+</script>
+

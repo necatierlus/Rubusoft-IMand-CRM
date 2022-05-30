@@ -1,0 +1,261 @@
+﻿@model AppSettingEditModel
+@{
+    ViewData["Title"] = "AppSettingEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .form-group {
+        margin-bottom: 1.75em;
+    }
+</style>
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Ayarlar</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="/Home/Index" class="text-muted text-hover-primary">Anasayfa</a>
+                </li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-body p-0">
+                <div class="wizard wizard-1" id="kt_projects_add" data-wizard-state="step-first" data-wizard-clickable="true">
+                    <!--begin::Wizard Body-->
+                    <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                        <div class="col-xl-12 col-xxl-7">
+                            <!--begin::Form Wizard-->
+                            <form class="form" id="kt_appsettings_edit_form" asp-controller="AppSetting" asp-action="AppSettingEdit" method="post" enctype="multipart/form-data">
+                                <!--begin::Step 1-->
+                                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                    <h3 class="mb-10 font-weight-bold text-dark">Ayarları Düzenle:</h3>
+                                    <div class="row">
+                                        <input type="hidden" asp-for="IdKod" name="IdKod" />
+                                        <div class="col-xl-12">
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label required">Firma Adı</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="FirmName" placeholder="" name="FirmName" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label required">Firma Unvanı</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="TradeName" placeholder="" name="TradeName" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label required">Email</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="EMail" placeholder="" name="EMail" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Web Adres</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="WebAddress" placeholder="" name="WebAddress" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Telefon</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" asp-for="PhoneNumber" placeholder="" name="PhoneNumber" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Fax</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" asp-for="FaxNumber" placeholder="" name="FaxNumber" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Vergi Dairesi</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="TaxOffice" placeholder="" name="TaxOffice" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Vergi Numarası</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid TaxNumberMask" asp-for="TaxNumber" placeholder="" name="TaxNumber" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Adres</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <textarea class="form-control form-control-lg form-control-solid" rows="3" asp-for="Address" name="Address"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Logo</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-outline ml-1" data-kt-image-input="true" style="background-image: url(/assets/media/appsettings/@Model.Logo)">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-300px h-100px" style="background-image: url(/assets/media/appsettings/@Model.Logo )"></div>
+                                                        <!--end::Preview existing avatar-->
+                                                        <!--begin::Label-->
+                                                        <label class="btn btn-icon btn-active-color-primary w-50px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Fotoğraf Değiştir">
+                                                            <i class="bi bi-plus-circle-fill"><span style="font-style:normal;">Ekle</span></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" name="Logo" asp-for="Logo" accept=".png, .jpg, .jpeg" />
+                                                            <input type="hidden" name="appsettingPhoto_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <!--begin::Cancel-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Fotoğraf İptal">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Cancel-->
+                                                        <!--begin::Remove-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Fotoğraf Sil">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+                                                    <!--begin::Hint-->
+                                                    <div class="form-text">Fotoğraf tipi: png, jpg, jpeg.(350px X 120px)</div>
+                                                    <!--end::Hint-->
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Host</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" disabled class="form-control form-control-lg form-control-solid" asp-for="MailSenderHost" placeholder="" name="MailSenderHost" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Port</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" disabled class="form-control form-control-lg form-control-solid" asp-for="MailSenderPort" placeholder="" name="MailSenderPort" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">SSL</label>
+                                                <div class="col-lg-9 col-xl-9 pt-4">
+                                                    <input type="checkbox" disabled class="form-check-input h-20px w-30px" asp-for="MailSenderEnableSSL" name="MailSenderEnableSSL" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Gönderilen Mail Adresi</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" disabled class="form-control form-control-lg form-control-solid" asp-for="MailSenderUserName" placeholder="" name="MailSenderUserName" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Gönderilen Mail Şifresi</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="password" disabled class="form-control form-control-lg form-control-solid" asp-for="MailSenderPassword" placeholder="" name="MailSenderPassword" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label required">Teklif Kodu</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="BidCode" placeholder="" name="BidCode" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Step 1-->
+                                <!--begin::Actions-->
+                                <div class="d-flex justify-content-between border-top mt-5 pt-10">
+                                    <div class="mr-2">
+                                        <button type="submit" id="kt_edit_appsetting_submit" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4">Kaydet</button>
+                                    </div>
+                                </div>
+                                <!--end::Actions-->
+                            </form>
+                            <!--end::Form Wizard-->
+                        </div>
+                    </div>
+                    <!--end::Wizard Body-->
+                </div>
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+@section Scripts
+{
+    <script src="~/assets/js/custom/apps/appsettings/edit.js"></script>
+
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+        };
+
+        var msg;
+        if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+            msg = '@Html.Raw((string)TempData["message"])';
+            if (msg != null) {
+                msgArr = msg.split('|');
+                if (msgArr[1] == "success") {
+                    toastr.success(msgArr[0]);
+                } else if (msgArr[1] == "error") {
+                    toastr.error(msgArr[0]);
+                } else if (msgArr[1] == "warning") {
+                    toastr.warning(msgArr[0]);
+                } else if (msgArr[1] == "info") {
+                    toastr.info(msgArr[0]);
+                }
+
+            }
+        }
+
+        Inputmask({
+            "mask": "(999) 999-9999"
+        }).mask(".PhoneMask");
+
+        Inputmask({
+            "mask": "9",
+            "repeat": 10,
+            "greedy": false
+        }).mask(".TaxNumberMask");
+
+    </script>
+
+}
+

@@ -1,0 +1,610 @@
+﻿@using IMandCRM.UI.Models.CustomerRequest
+@model List<CustomerRequestModel>
+@{
+    ViewData["Title"] = "CallRequests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Müşteri Talepleri</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Müşteri Talep Listesi</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container">
+        <!--begin::Navbar-->
+        <div class="card mb-9">
+            <div class="card-body pt-9 pb-0">
+                <div class="separator"></div>
+                <!--begin::Nav wrapper-->
+                <div class="d-flex overflow-auto h-55px">
+                    <!--begin::Nav links-->
+                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
+                        <!--begin::Nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary me-6 fs-7" href="/CustomerRequest/ApplicationRequests">Başvuru</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary me-6 fs-7 active" href="/CustomerRequest/CallRequests">Arama</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary me-6 fs-7" href="/CustomerRequest/BidRequests">Teklif</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary me-6 fs-7" href="/CustomerRequest/SalesRequests">Satış</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary me-6 fs-7" href="/CustomerRequest/CancelRequests">İptal</a>
+                        </li>
+                        <!--end::Nav item-->
+                    </ul>
+                    <!--end::Nav links-->
+                </div>
+                <!--end::Nav wrapper-->
+            </div>
+        </div>
+        <!--end::Navbar-->
+        <!--begin::Card-->
+        <div class="card">
+            <!--begin::Card header-->
+            <div class="card-header border-0 pt-6">
+                <!--begin::Card title-->
+                <div class="card-title">
+                    <!--begin::Search-->
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <!--begin::Svg Icon | path: icons/duotone/General/Search.svg-->
+                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                    <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                        <input type="text" data-kt-customer-request-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Ara" />
+                    </div>
+                    <!--end::Search-->
+                </div>
+                <!--begin::Card title-->
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
+                    <!--begin::Toolbar-->
+                    <div class="d-flex justify-content-end" data-kt-customer-request-table-toolbar="base">
+                    </div>
+                    <!--end::Toolbar-->
+                    <!--begin::Group actions-->
+                    <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-request-table-toolbar="selected">
+                        <div class="fw-bolder me-5">
+                            <span class="me-2" data-kt-customer-request-table-select="selected_count"></span>Seçili
+                        </div>
+                        <button type="button" class="btn btn-danger" data-kt-customer-request-table-select="delete_selected">Seçilenleri Sil</button>
+                    </div>
+                    <!--end::Group actions-->
+                </div>
+                <!--end::Card toolbar-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+                <form id="CustomerRequestForm">
+                    <!--begin::Table-->
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customer_requests_table">
+                        <!--begin::Table head-->
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                <th class="w-10px pe-2">
+                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customer_requests_table .form-check-input" value="1" />
+                                    </div>
+                                </th>
+                                <th class="min-w-125px">AD</th>
+                                <th class="min-w-125px">E-MAİL</th>
+                                <th class="min-w-125px">TELEFON</th>
+                                <th class="min-w-125px">KULLANIM ALANI</th>
+                                <th class="min-w-125px">TARİH</th>
+                                <th class="min-w-125px text-center">DURUM</th>
+                                <th class="text-center"></th>
+                                <th class="text-center"></th>
+                            </tr>
+                            <!--end::Table row-->
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody class="fw-bold text-gray-600">
+                            @foreach (var customerRequest in Model)
+                            {
+                                <tr data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="@customerRequest.Description">
+                                    <td>
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox" value="@customerRequest.IdKod" name="DeleteCustomerRequests" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @customerRequest.FirstName @customerRequest.LastName
+                                    </td>
+                                    <td>
+                                        @customerRequest.Email
+                                    </td>
+                                    <td>
+                                        @customerRequest.PhoneNumber
+                                    </td>
+                                    <td>
+                                        @if (customerRequest.UsingSpace == 1)
+                                        {
+                                            <span>Eczane</span>
+                                        }
+                                        else if (customerRequest.UsingSpace == 2)
+                                        {
+                                            <span>Medikal</span>
+                                        }
+                                        else if (customerRequest.UsingSpace == 3)
+                                        {
+                                            <span>Optik</span>
+                                        }
+                                        else if (customerRequest.UsingSpace == 4)
+                                        {
+                                            <span>Güzellik Salonu</span>
+                                        }
+                                        else if (customerRequest.UsingSpace == 5)
+                                        {
+                                            <span>Güzellik Merkezi</span>
+                                        }
+                                        else if (customerRequest.UsingSpace == 6)
+                                        {
+                                            <span>Kuaför</span>
+                                        }
+                                        else if (customerRequest.UsingSpace == 7)
+                                        {
+                                            <span>Diğer</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @customerRequest.RequestDate.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td class="text-center">
+                                        <!--begin::Select-->
+                                        <select name="RequestStatus" data-control="select2" class="form-select form-select-solid" asp-for="@customerRequest.RequestStatus" CustomerRequestIdKod="@customerRequest.IdKod">
+                                            <option value="1">Başvuru</option>
+                                            <option value="2">Arama</option>
+                                            <option value="3">Teklif</option>
+                                            <option value="4">Satış</option>
+                                            <option value="5">İptal</option>
+                                        </select>
+                                        <!--end::Select-->
+                                    </td>
+
+                                    <td class="text-center">
+                                        <a href="#" class="description" data-bs-toggle="modal" data-bs-target="#kt_modal_description" CustomerRequestIdKod="@customerRequest.IdKod"><i class="fas fa-info-circle text-info" style="font-size:20px;" data-bs-toggle="tooltip" title="Açıklama Ekle"></i></a>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (customerRequest.IsFirm)
+                                        {
+                                            <a href="/CustomerRequest/CreateBid?idKod=@customerRequest.IdKod" class="createOffer" CustomerRequestIdKod="@customerRequest.IdKod"><i class="far fa-file-alt text-success" style="font-size:20px;" data-bs-toggle="tooltip" title="Teklif Oluştur"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="addFirm" data-bs-toggle="modal" data-bs-target="#kt_modal_firm_add" CustomerRequestIdKod="@customerRequest.IdKod"><i class="fas fa-plus-circle text-success" style="font-size:20px;" data-bs-toggle="tooltip" title="Firma Oluştur"></i></a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                    <!--end::Table-->
+                </form>
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Card-->
+        <!--begin::Modal - Description - Add-->
+        <div class="modal fade" id="kt_modal_description" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Form-->
+                    <form class="form" id="kt_modal_description_form" asp-controller="CustomerRequest" asp-action="DescriptionAdd" method="post" enctype="multipart/form-data">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_description_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bolder">Açıklama Ekle</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div id="kt_modal_description_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                            <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                            <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <!--begin::Scroll-->
+                            <div class="scroll-y me-n7 pe-7" id="kt_modal_send_mail_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
+                                <input type="hidden" id="IdKodDescription" name="IdKod" />
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">Açıklama</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <textarea class="form-control form-control-solid" rows="4" name="Description"></textarea>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
+                            <!--end::Scroll-->
+                        </div>
+                        <!--end::Modal body-->
+                        <!--begin::Modal footer-->
+                        <div class="modal-footer flex-center">
+                            <!--begin::Button-->
+                            <button type="reset" id="kt_modal_description_cancel" class="btn btn-white me-3">Vazgeç</button>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <button type="submit" id="kt_modal_descriptin_submit" class="btn btn-primary">
+                                <span class="indicator-label">Kaydet</span>
+                            </button>
+                            <!--end::Button-->
+                        </div>
+                        <!--end::Modal footer-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+        <!--end::Modal - Description - Add-->
+        <!--begin::Modal - Firm - Add-->
+        <div class="modal fade" id="kt_modal_firm_add" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Form-->
+                    <form class="form" id="kt_modal_firm_add_form" asp-controller="CustomerRequest" asp-action="FirmAdd" method="post" enctype="multipart/form-data">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_description_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bolder">Firma Ekle</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div id="kt_modal_firm_add_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                            <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                            <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <!--begin::Scroll-->
+                            <div class="scroll-y me-n7 pe-7" id="kt_modal_firm_add_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
+                                <input type="hidden" id="IdKodAddFirm" name="IdKod" />
+                                <input type="hidden" name="ManagerFirstName" />
+                                <input type="hidden" name="ManagerLastName" />
+                                <input type="hidden" name="FirmPhoneNumber" />
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">Firma Adı</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" name="FirmName" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">E-Mail</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" name="FirmEmail" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
+                            <!--end::Scroll-->
+                        </div>
+                        <!--end::Modal body-->
+                        <!--begin::Modal footer-->
+                        <div class="modal-footer flex-center">
+                            <!--begin::Button-->
+                            <button type="reset" id="kt_modal_firm_add_cancel" class="btn btn-white me-3">Vazgeç</button>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <button type="button" id="kt_modal_firm_add_save" class="btn btn-primary">
+                                <span class="indicator-label">Kaydet</span>
+                            </button>
+                            <!--end::Button-->
+                        </div>
+                        <!--end::Modal footer-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+        <!--end::Modal - Firm - Add-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+
+@section Scripts
+{
+
+    <!--begin::Page Vendors Javascript(used by this page)-->
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <!--end::Page Vendors Javascript-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    @*<script src="~/assets/js/custom/apps/customers/list/export.js"></script>*@
+    <script src="~/assets/js/custom/apps/customerrequest/list.js"></script>
+
+    <!--end::Page Custom Javascript-->
+
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+        };
+
+    var msg;
+    if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+        msg = '@Html.Raw((string)TempData["message"])';
+        if (msg != null) {
+            msgArr = msg.split('|');
+            if (msgArr[1] == "success") {
+                toastr.success(msgArr[0]);
+            } else if (msgArr[1] == "error") {
+                toastr.error(msgArr[0]);
+            } else if (msgArr[1] == "warning") {
+                toastr.warning(msgArr[0]);
+            } else if (msgArr[1] == "info") {
+                toastr.info(msgArr[0]);
+            }
+
+        }
+        }
+        $(function () {
+
+            //Açıklama popup
+            $(".description").on("click", function () {
+                var idKod = $(this).attr("CustomerRequestIdKod");
+                $("#IdKodDescription").val(idKod);
+                $.ajax({
+                    url: "/CustomerRequest/GetRequestDescription?idKod=" + idKod,
+                    type: "GET",
+                    success: function (response) {
+                        $("[name='Description']").val(response.description);
+                    },
+                    error: function (error) {
+
+                    }
+                });
+            });
+
+            var modalDescription = new bootstrap.Modal(document.querySelector('#kt_modal_description'));
+            $("#kt_modal_description_cancel").on("click", function () {
+                var form = document.querySelector('#kt_modal_description_form');
+                form.reset();
+                modalDescription.hide();
+            });
+
+            $("#kt_modal_description_close").on("click",function(){
+                var form = document.querySelector('#kt_modal_description_form');
+                form.reset();
+            });
+
+            $("[name='RequestStatus']").on("change", function () {
+                debugger;
+                var idKod = $(this).attr("CustomerRequestIdKod");
+                var object = new Object();
+                object.IdKod = idKod;
+                object.RequestStatus = $(this).val();
+
+                var dataVal = JSON.stringify(object);
+
+                $.ajax({
+                    url: "/CustomerRequest/ChangeRequestStatus",
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: dataVal,
+                    success: function (response) {
+                        console.log(response);
+                        if (response.responseStatus) {
+                            toastr.success(response.messageText);
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 1000);
+                        } else {
+                            toastr.error(response.messageText);
+                        }
+                    },
+                    error: function (error) {
+
+                    }
+                });
+
+            });
+
+            //Firma ekleme popup
+            $(".addFirm").on("click", async function () {
+                var idKod = $(this).attr("CustomerRequestIdKod");
+                $("#IdKodAddFirm").val(idKod);
+                await $.ajax({
+                    url: "/CustomerRequest/GetCustomer?idKod=" + idKod,
+                    type: "GET",
+                    success: function (response) {
+                        $("[name='FirmName']").val(response.firstName + " " + response.lastName);
+                        $("[name='FirmEmail']").val(response.email);
+                        $("[name='ManagerFirstName']").val(response.firstName);
+                        $("[name='ManagerLastName']").val(response.lastName);
+                        $("[name='FirmPhoneNumber']").val(response.phoneNumber);
+                    },
+                    error: function (error) {
+
+                    }
+                });
+            });
+
+            var modalFirmAdd = new bootstrap.Modal(document.querySelector('#kt_modal_firm_add'));
+            $("#kt_modal_firm_add_cancel").on("click", function () {
+                var form = document.querySelector('#kt_modal_firm_add_form');
+                form.reset();
+                modalFirmAdd.hide();
+            });
+
+            $("#kt_modal_firm_add_close").on("click", function () {
+                var form = document.querySelector('#kt_modal_firm_add_form');
+                form.reset();
+            });
+
+            $("#kt_modal_firm_add_save").on("click", function () {
+
+                var isValid = FormValidation();
+
+                if (isValid) {
+
+                    var valdata = $("#kt_modal_firm_add_form").serialize();
+
+                    Swal.fire({
+                        title: "Kaydetmek istediğinizden emin misiniz?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        cancelButtonText: "Hayır!",
+                        confirmButtonText: "Evet!"
+                    }).then(function (result) {
+                        if (result.value) {
+                            $.ajax({
+                                url: "/CustomerRequest/FirmAdd",
+                                type: "POST",
+                                dataType: 'json',
+                                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                data: valdata,
+                                success: function (response) {
+                                    console.log(response);
+                                    if (response.responseStatus) {
+                                        toastr.success(response.messageText);
+                                        setTimeout(function () {
+                                            location.reload(true);
+                                        }, 1000);
+                                    } else {
+                                        toastr.error(response.messageText);
+                                    }
+                                },
+                                error: function (error) {
+
+                                }
+                            });
+                        }
+                    });
+
+                }
+
+            });
+
+        });
+
+        function FormValidation() {
+            var isValid = true;
+            if ($('[name="FirmName"]').val() == "") {
+                toastr.warning("Firma adını giriniz.");
+                isValid = false;
+            }
+            if ($('[name="FirmEmail"]').val() == "") {
+                toastr.warning("Mail adresini giriniz.");
+                isValid = false;
+            }
+            if (!isEmail($('[name="FirmEmail"]').val())) {
+                toastr.warning("Mail adresini uygun formatta giriniz.");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+
+    </script>
+
+
+}
+
+
+

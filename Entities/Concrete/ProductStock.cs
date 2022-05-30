@@ -1,0 +1,22 @@
+﻿using Core.Entities;
+using Entities.Common;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace Entities.Concrete
+{
+    public class ProductStock:CommonFeature,IEntity
+    {
+        [Key]
+        public int Id { get; set; }
+        public string IdKod { get; set; }
+        public string DeviceStockIdKods { get; set; }
+        public string ProductIdKod { get; set; }
+        public string SerialNumber { get; set; }
+        public string Description { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsSold { get; set; }
+    }
+}

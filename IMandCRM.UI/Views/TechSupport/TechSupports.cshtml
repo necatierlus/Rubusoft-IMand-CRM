@@ -1,0 +1,491 @@
+﻿@model TechSupportListModel
+@using System.Globalization;
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IMandCRM.UI.Identity.User> UserManager
+@{
+    ViewData["Title"] = "TechSupports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Talepler</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="/Home/Index" class="text-muted text-hover-primary">Anasayfa</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Talep Listesi</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container">
+        <!--begin::Card-->
+        <div class="card">
+            <!--begin::Card header-->
+            <div class="card-header border-0 pt-6">
+                <!--begin::Card title-->
+                <div class="card-title">
+                    <!--begin::Search-->
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <!--begin::Svg Icon | path: icons/duotone/General/Search.svg-->
+                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                    <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                        <input type="text" data-kt-techsupport-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Talep Ara" />
+                    </div>
+                    <!--end::Search-->
+                </div>
+                <!--begin::Card title-->
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
+                    <!--begin::Group actions-->
+                    <div class="d-flex justify-content-end align-items-center d-none" data-kt-techsupport-table-toolbar="selected">
+                        <div class="fw-bolder me-5">
+                            <span class="me-2" data-kt-techsupport-table-select="selected_count"></span>Seçili
+                        </div>
+                        <button type="button" class="btn btn-danger" data-kt-techsupport-table-select="delete_selected">Seçilenleri Sil</button>
+                    </div>
+                    <!--end::Group actions-->
+                </div>
+                <!--end::Card toolbar-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+
+            <div class="card-body pt-0">
+                <form id="TechSupportListForm">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_techsupports_table">
+                        <thead>
+                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                <th class="w-10px pe-2">
+                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_techsupports_table .form-check-input" value="1" />
+                                    </div>
+                                </th>
+                                <th class="min-w-125px">Firma Adı</th>
+                                <th class="min-w-125px">Oluşturan Personel</th>
+                                <th class="min-w-125px">Destek Tip</th>
+                                <th class="min-w-125px">Açıklama</th>
+                                <th class="min-w-125px">Tarih</th>
+                                <th class="text-center">Durum Ekle</th>
+                                <th class="text-center">Detay</th>
+                                <th class="text-center">Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody class="fw-bold text-gray-600">
+                            @foreach (var techSupport in Model.TechSupportDtos)
+                            {
+                            <tr>
+                                <td>
+                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" value="@techSupport.IdKod" name="DeleteTechSupports" />
+                                    </div>
+                                </td>
+                                <td>
+                                    @techSupport.FirmName
+                                </td>
+                                <td>
+                                    @techSupport.CreatedPersonalName
+                                </td>
+                                <td>
+                                    @techSupport.SupportTypeName
+                                </td>
+                                <td data-bs-toggle="tooltip" data-bs-placement="top" title="@techSupport.Description">
+                                    @techSupport.DescriptionShort
+                                </td>
+                                <td>
+                                    @techSupport.StartDate.ToString("dd/MM/yyyy dd:mm")
+                                </td>
+                                <td class="text-center">
+                                    @if (!techSupport.Status)
+                                        {
+                                    <button type="button" class="description btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="modal" onclick="AddDescription('@techSupport.IdKod')" data-bs-target="#kt_modal_add_techsupportdetail"><i class="fas fa-plus-circle" style="font-size:20px;" data-bs-toggle="tooltip" title="Açıklama Ekle"></i></button>
+                                        }
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="description btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="modal" onclick="TechSupportDetailView('@techSupport.IdKod')" data-bs-target="#kt_modal_view_techsupportdetail"><i class="fas fa-info-circle" style="font-size:20px;" data-bs-toggle="tooltip" title="Detay"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    @if (techSupport.Status)
+                                        {
+                                    <i class="far fa-check-circle" style="font-size:20px; color:lawngreen" data-bs-toggle="tooltip" title="Kapandı"></i>
+                                        }
+                                        else
+                                        {
+                                    <i class="far fa-clock text-primary" style="font-size:20px;" data-bs-toggle="tooltip" title="Açık"></i>
+                                        }
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <!--end::Card body-->
+        </div>
+        <!--end::Card-->
+        <!--begin::Modals-->
+        <!--begin::Modal - Description - Add-->
+        <div class="modal fade" id="kt_modal_add_techsupportdetail" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Form-->
+                    <form class="form" id="kt_modal_add_techsupportdetail_form" asp-controller="TechSupportDetail" asp-action="TechSupportDetailAdd" method="post">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_techsupportdetail_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bolder">Açıklama Ekle</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div id="kt_modal_add_techsupportdetail_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                            <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                            <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <!--begin::Scroll-->
+                            <div class="scroll-y me-n7 pe-7" id="kt_modal_add_product_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
+                                <!--begin::Input group-->
+                                <input type="hidden" name="UserId" value="@user.Id" />
+                                <input type="hidden" name="TechSupportIdKod" />
+
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold mb-2 required">Açıklama</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <textarea class="form-control form-control-solid" rows="3" name="Description"></textarea>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold mb-2">Durum</label>
+                                    <!--end::Label-->
+                                    <div class="row">
+                                        <div class="col-xl-2 col-lg-2">
+                                            <div class="form-check form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="radio" value=true name="Status" id="statusClose" />
+                                                <label class="form-check-label" for="flexRadioChecked">
+                                                    Kapandı
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2">
+                                            <div class="form-check form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="radio" value=false name="Status" id="statusOpen" />
+                                                <label class="form-check-label" for="flexRadioChecked">
+                                                    Açık
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Scroll-->
+                        </div>
+                        <!--end::Modal body-->
+                        <!--begin::Modal footer-->
+                        <div class="modal-footer flex-center">
+                            <!--begin::Button-->
+                            <button type="reset" id="kt_modal_add_techsupportdetail_cancel" class="btn btn-white me-3">Vazgeç</button>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <button type="submit" id="kt_modal_add_techsupportdetail_submit" class="btn btn-primary">
+                                <span class="indicator-label">Kaydet</span>
+                                <span class="indicator-progress">
+                                    Lütfen bekleyiniz...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                            <!--end::Button-->
+                        </div>
+                        <!--end::Modal footer-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+        <!--end::Modal - Customers - Add-->
+        <!--begin::Modal - Description - Add-->
+        <div class="modal fade" id="kt_modal_view_techsupportdetail" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_view_techsupportdetail_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bolder">Detay</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div id="kt_modal_view_techsupportdetail_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                            <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                            <span class="svg-icon svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                        <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                        <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
+                                    </g>
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-10 px-lg-17">
+                        <!--begin::Scroll-->
+                        <div class="scroll-y me-n7 pe-7" id="kt_modal_add_product_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
+
+                            <div style="width:100%; margin-bottom:80px; border:1px solid #fff;">
+                                <!--begin::Teklif bilgileri-->
+                                <div class="mb-5">
+                                    <h3>Destek Bilgileri</h3>
+                                </div>
+                                <div class="separator mb-5"></div>
+                                <div class="row fs-7 mb-3">
+                                    <div class="col-md-3 fw-bold">
+                                        Firma Adı
+                                    </div>
+                                    <div class="col-md-9" id="firmName">
+
+                                    </div>
+                                </div>
+                                <div class="row fs-7 mb-3">
+                                    <div class="col-md-3 fw-bold">
+                                        Oluşturan Personel
+                                    </div>
+                                    <div class="col-md-9" id="createdPersonalName">
+                                    </div>
+                                </div>
+                                <div class="row fs-7 mb-3">
+                                    <div class="col-md-3 fw-bold">
+                                        Fotoğraf
+                                    </div>
+                                    <div class="col-md-9">
+                                        <!--begin::Image input-->
+                                        <div class="image-input image-input-outline ml-1" id="photo" data-kt-image-input="true">
+                                            <!--begin::Preview existing avatar-->
+                                            <div class="image-input-wrapper w-300px h-300px" id="photoPreview"></div>
+                                            <!--end::Preview existing avatar-->
+                                        </div>
+                                        <!--end::Image input-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <h3>Detay Bilgileri</h3>
+                            </div>
+                            <div class="separator mb-5"></div>
+
+                            <form id="ProductListForm">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_products_table">
+                                    <!--begin::Table head-->
+                                    <thead>
+                                        <!--begin::Table row-->
+                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                            <th class="min-w-125px">Açıklama</th>
+                                            <th class="min-w-125px">Teknik Personel</th>
+                                            <th class="min-w-125px">Tarih</th>
+                                        </tr>
+                                        <!--end::Table row-->
+                                    </thead>
+                                    <!--end::Table head-->
+                                    <!--begin::Table body-->
+                                    <tbody class="fw-bold text-gray-600" id="techSupportDetailTableBody">
+
+
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </form>
+
+
+
+                        </div>
+                        <!--end::Scroll-->
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+            </div>
+        </div>
+        <!--end::Modal - Customers - Add-->
+        <!--end::Modals-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+@section Scripts
+{
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <!--begin::Page Vendors Javascript(used by this page)-->
+    <!--end::Page Vendors Javascript-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <script src="~/assets/js/custom/apps/techsupports/list.js"></script>
+    <script src="~/assets/js/custom/apps/techsupportdetails/add.js"></script>
+    <!--end::Page Custom Javascript-->
+    <script src="~/assets/plugins/custom/select2/select2.js"></script>
+
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+        };
+
+        var msg;
+        if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+        msg = '@Html.Raw((string)TempData["message"])';
+                if (msg != null) {
+                msgArr = msg.split('|');
+                if (msgArr[1] == "success") {
+                    toastr.success(msgArr[0]);
+                } else if (msgArr[1] == "error") {
+                    toastr.error(msgArr[0]);
+                } else if (msgArr[1] == "warning") {
+                    toastr.warning(msgArr[0]);
+                } else if (msgArr[1] == "info") {
+                    toastr.info(msgArr[0]);
+                }
+            }
+        }
+        $(function () {
+            var modalSupportView = new bootstrap.Modal(document.querySelector('#kt_modal_view_techsupportdetail'));
+            $("#kt_modal_view_techsupportdetail_close").on("click", function () {
+                modalSupportView.hide();
+            });
+
+        });
+
+        function AddDescription(idKod) {
+            console.log(idKod);
+            $("[name='TechSupportIdKod']").val(idKod);
+
+            $.ajax({
+                url: '/TechSupport/TechSupportGetStatus?idKod=' + idKod,
+                type: 'GET',
+                success: function (response) {
+                    console.log(response);
+                    if (response.status) {
+                        $("#statusClose").attr("checked", "check");
+                    } else {
+                        $("#statusOpen").attr("checked", "check");
+                    }
+                },
+                error: function (error) {
+                    toastr.error("Hata oluştu.");
+                }
+            });
+        }
+
+        function TechSupportDetailView(idKod) {
+            console.log(idKod);
+            $("[name='TechSupportIdKod']").val(idKod);
+
+            $.ajax({
+                url: '/TechSupportDetail/TechSupportDetails?techSupportIdKod=' + idKod,
+                type: 'GET',
+                success: function (response) {
+                    console.log(response);
+                    $("#firmName").html(response.techSupportDto.firmName);
+                    $("#createdPersonalName").html(response.techSupportDto.createdPersonalName);
+
+                    $("#photo").css("background-image", `url(/assets/media/techsupports/${response.techSupportDto.photo})`);
+                    $("#photoPreview").css("background-image", `url(/assets/media/techsupports/${response.techSupportDto.photo})`);
+                    var html = ``;
+                    $.each(response.techSupportDetailDtos, function (ind, val) {
+                        html += `<tr>`;
+                        html += `<td data-bs-toggle="tooltip" data-bs-placement="top" title="${val.description}">${val.descriptionShort}</td>`;
+                        html += `<td>${val.userFullName}`;
+                        var dt = Date.parse(val.createdDate);
+                        var date = new Date(dt).toJSON();           // "2017-04-17T22:26:03.000Z"
+                        var dateStr = date.slice(0, 10).split("-").reverse().join("/") // "17/04/2017"
+                            .concat(' ')
+                            .concat(date.slice(11, 16));       // "22:26"
+                        html += `<td>${dateStr}`;
+                        html += `</tr>`;
+                    });
+
+                    $("#techSupportDetailTableBody").html(html);
+                },
+                error: function (error) {
+                    toastr.error("Hata oluştu.");
+                }
+            });
+        }
+
+    </script>
+
+
+}

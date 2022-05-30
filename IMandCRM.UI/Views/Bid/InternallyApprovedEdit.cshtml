@@ -1,0 +1,869 @@
+﻿@model BidEditModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IMandCRM.UI.Identity.User> UserManager
+@{
+    ViewData["Title"] = "InternallyApprovedEdit";
+    var user = await UserManager.GetUserAsync(User);
+}
+<style>
+    .br0 {
+        border-radius: 0 !important;
+    }
+
+    .faicon {
+        font-weight: 100 !important;
+        font-family: unset !important;
+    }
+
+    .deleteProduct {
+        font-size: 20px;
+        margin-top: 5px;
+        cursor: pointer;
+    }
+
+    .spanIcon {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    #overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1000;
+        cursor: wait;
+    }
+
+    #text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 50px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #spinnerIcon {
+        font-size: 50px;
+    }
+</style>
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Teklif Gönder</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="/Home/Index" class="text-muted text-hover-primary">Anasayfa</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Teklif Gönder</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+
+    <div id="overlay">
+        <div id="text">
+            <div><i class="fas fa-spinner fa-spin text-warning" id="spinnerIcon"></i></div>
+            <div>Teklif Gönderiliyor</div>
+        </div>
+    </div>
+
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container">
+        <!--begin::Form-->
+        <form class="mx-auto mw-1200px w-100 pt-0 pb-10" novalidate="novalidate" id="kt_bid_edit_form" asp-controller="Bid" asp-action="InternallyApprovedEdit" method="post">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header card-header-stretch">
+                    <ul class="nav nav-tabs nav-line-tabs mt-6 fs-6" style="border:none!important;">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_create_bid">Teklif Bilgileri</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_requirement">Teklif Şartları</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body">
+                    <!--begin::Tab content-->
+                    <div class="tab-content" id="myTabContent">
+                        <!--begin::Tab create_bid-->
+                        <div class="tab-pane fade show active" id="kt_tab_create_bid" role="tabpanel">
+                            <!--begin::Step 1-->
+                            <div class="current" data-kt-stepper-element="content">
+                                <!--begin::Wrapper-->
+                                <div class="w-100">
+                                    <!--begin::Input group-->
+                                    <div class="row g-9 mb-10">
+                                        <!--begin::Hidden-->
+                                        <input type="hidden" name="BidStatusStr" />
+                                        <input type="hidden" name="CreatedPersonalId" value="@user.Id" />
+                                        <input type="hidden" name="IdKod" value="@Model.IdKod" asp-for="IdKod" />
+
+                                        <!--end::Hidden-->
+                                        <!--begin::Col-->
+                                        <div class="col-md-12 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold form-label required">Firma Adı</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select name="FirmIdKod" asp-for="FirmIdKod" data-control="select2" data-placeholder="Firma Seçiniz..." productattr="" class="form-select form-select-sm br0">
+                                                <option value="">Firma Seçiniz...</option>
+                                                @foreach (var firm in Model.firms)
+                                                {
+                                                    if (firm.IdKod == Model.FirmIdKod)
+                                                    {
+                                                        <option value="@firm.IdKod" selected>@firm.FirmName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@firm.IdKod">@firm.FirmName</option>
+                                                    }
+
+                                                }
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="row g-9 mb-10">
+                                        <!--begin::Col-->
+                                        <div class="col-md-4 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold form-label required">Firma Yönetici</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select name="FirmManagerIdKod" asp-for="FirmManagerIdKod" data-control="select2" data-placeholder="Yönetici Seçiniz..." class="form-select form-select-sm br0">
+                                                <option value="">Yönetici Seçiniz...</option>
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-md-4 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold form-label required">Teklif Tarihi</label>
+                                            <!--end::Label-->
+                                            <!--begin::Datepicker-->
+                                            <input type="datetime" class="form-control form-control-sm fw-bolder pe-5 br0" placeholder="Teklif Tarihi Seçiniz..." name="BidDate" asp-for="BidDate" />
+                                            <!--end::Datepicker-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-md-4 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold form-label">Teklif Geçerlilik Süresi</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select name="BidPeriodOfValidity" data-control="select2" class="form-select form-select-sm br0" asp-for="BidPeriodOfValidity">
+                                                <option value="7">+ 7 Gün</option>
+                                                <option value="10">+ 10 Gün</option>
+                                                <option value="15">+ 15 Gün</option>
+                                                <option value="30">+ 30 Gün</option>
+                                                <option value="45">+ 45 Gün</option>
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <div class="row g-9 mb-10">
+                                        <!--begin::Table container-->
+                                        <div class="table-responsive">
+                                            <!--begin::Table-->
+                                            <table id="kt_product_add_table" class="table table-row-dashed table-row-gray-300 gy-7">
+                                                <!--begin::Head-->
+                                                <thead class="fs-7 text-dark-100">
+                                                    <tr>
+                                                        <th></th>
+                                                        <th class="min-w-350px">Ürün</th>
+                                                        <th class="text-center" style="width:96px; min-width:96px;">Miktar</th>
+                                                        <th class="min-w-90px text-center">Birim Fiyat</th>
+                                                        <th class="text-center" style="width:85px; min-width:85px;">İskonto</th>
+                                                        <th class="min-w-90px text-center">İsk B.Fiyat</th>
+                                                        <th class="min-w-90px text-center">Ara Toplam</th>
+                                                    </tr>
+                                                </thead>
+                                                <!--end::Head-->
+                                                <!--begin::Body-->
+                                                <tbody class="fs-6" id="tbodyProducts">
+                                                </tbody>
+                                                <!--end::Body-->
+                                                <!--begin::Footer-->
+                                                <tfoot style="border-bottom:1px solid #eff2f5;">
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <button type="button" class="btn btn-success btn-sm mr-3" id="addNewProduct">
+                                                                <i class="far fa-plus-square text-active-white"></i>Ekle
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" rowspan="3">
+                                                            <b>Teklif sunum sayfasında görünmesini istediğiniz alanları açık konuma getiriniz.</b>
+                                                            <div class="row mt-4">
+                                                                <div class="col-md-4">
+                                                                    <ul class="list-group">
+                                                                        <li class="list-group-item">
+                                                                            <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                                                                <input class="form-check-input h-20px w-30px" type="checkbox" asp-for="UnitPriceIsShow" name="UnitPriceIsShow" />
+                                                                                <label class="form-check-label" for="flexSwitch20x30">
+                                                                                    <b>Birim Fiyat</b>
+                                                                                </label>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="list-group-item">
+                                                                            <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                                                                <input class="form-check-input h-20px w-30px" type="checkbox" asp-for="GeneralTotalIsShow" name="GeneralTotalIsShow" />
+                                                                                <label class="form-check-label" for="flexSwitch20x30">
+                                                                                    <b>Genel Toplam</b>
+                                                                                </label>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <ul class="list-group">
+                                                                        <li class="list-group-item">
+                                                                            <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                                                                <input class="form-check-input h-20px w-30px" type="checkbox" asp-for="DiscountIsShow" name="DiscountIsShow" />
+                                                                                <label class="form-check-label" for="flexSwitch20x30">
+                                                                                    <b>İskonto Oranı</b>
+                                                                                </label>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="list-group-item">
+                                                                            <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                                                                <input class="form-check-input h-20px w-30px" type="checkbox" asp-for="DiscountUnitPriceIsShow" name="DiscountUnitPriceIsShow" />
+                                                                                <label class="form-check-label" for="flexSwitch20x30">
+                                                                                    <b>İndirimli Fiyat</b>
+                                                                                </label>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <b>Toplam</b>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <div class="input-group input-group-sm">
+                                                                    <input type="text" class="form-control form-control-sm br0 TotalPrice" name="StrTotalPrice" value="@Model.StrTotalPrice" readonly asp-for="StrTotalPrice">
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text br0 spanIcon">
+                                                                            <i class="fa faicon">₺</i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-end">
+                                                            <b>Toplam İskonto</b>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <div class="input-group input-group-sm">
+                                                                    <input type="text" class="form-control form-control-sm br0 TotalDiscount" name="StrTotalDiscount" value="@Model.StrTotalDiscount" readonly asp-for="StrTotalDiscount">
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text br0 spanIcon">
+                                                                            <i class="fa faicon">₺</i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-end">
+                                                            <b>Genel Toplam</b>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <div class="input-group input-group-sm">
+                                                                    <input type="text" class="form-control form-control-sm br0 GeneralTotal" name="StrGeneralTotal" value="@Model.StrGeneralTotal" readonly asp-for="StrGeneralTotal">
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text br0 spanIcon">
+                                                                            <i class="fa faicon">₺</i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                                <!--end::Footer-->
+
+                                            </table>
+                                            <!--end::Table-->
+                                        </div>
+                                        <!--end::Table container-->
+                                    </div>
+
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
+
+                        </div>
+                        <!--end::Tab create_bid-->
+                        <!--begin::Tab requirement-->
+                        <div class="tab-pane fade" id="kt_tab_requirement" role="tabpanel">
+                            <!--begin::Step 1-->
+                            <div class="current" data-kt-stepper-element="content">
+                                <!--begin::Wrapper-->
+                                <div class="w-100">
+                                    <!--begin::Input group-->
+                                    <div class="row g-9 mb-10">
+                                        <!--begin::Col-->
+                                        <div class="col-md-12 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold form-label required">Teklif Şartı</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select data-control="select2" name="GeneralRequirement" data-placeholder="Teklif Şartı Seçiniz..." class="form-select form-select-sm br0">
+                                                <option value="">Teklif Şartı Seçiniz...</option>
+                                                @foreach (var generalRequirement in Model.requirements)
+                                                {
+                                                    <option value="@generalRequirement.IdKod">@generalRequirement.RequirementTitle</option>
+                                                }
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="row g-9 mb-10">
+                                        <!--begin::Col-->
+                                        <div class="col-md-12 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold form-label required">İçerik</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <textarea class="form-control br0" rows="15" name="GeneralRequirements" asp-for="GeneralRequirements"></textarea>
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
+                            <!--end::Step 1-->
+                        </div>
+                        <!--end::Tab requirement-->
+                    </div>
+                    <!--end::Tab content-->
+                </div>
+                <!--end::Card body-->
+                <!--begin::Card footer-->
+                <div class="card-footer">
+                    <!--begin::Actions-->
+                    <div class="d-flex justify-content-end py-6">
+                        <button type="button" id="btnPdf" class="btn btn-warning me-3 w-150px"><i class="far fa-file-pdf"></i>&nbsp;PDF İndir</button>
+                        <button type="button" id="btnPdfSpinner" class="btn btn-warning me-3 w-150px" style="display:none;"><i class="fas fa-spinner fa-spin"></i>&nbsp;İndiriliyor</button>
+                        <button type="button" id="btnSent" class="btn btn-outline btn-outline-default btn-outline-warning btn-active-light-warning"><i class="fas fa-arrow-alt-circle-right text-warning mr-5"></i>Onayla ve Gönder</button>
+                    </div>
+                    <!--end::Actions-->
+                </div>
+                <!--begin::Card footer-->
+            </div>
+            <!--end::Card-->
+        </form>
+        <!--end::Form-->
+
+    </div>
+    <!--end::Container-->
+
+</div>
+<!--end::Post-->
+@section Scripts
+{
+
+    <script>
+        $(async function () {
+
+            var productsAttrArr = [];
+            //Sayfa mesajları
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+            };
+
+
+            var msg;
+            if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+                msg = '@Html.Raw((string)TempData["message"])';
+                if (msg != null) {
+                    msgArr = msg.split('|');
+                    if (msgArr[1] == "success") {
+                        toastr.success(msgArr[0]);
+                    } else if (msgArr[1] == "error") {
+                        toastr.error(msgArr[0]);
+                    } else if (msgArr[1] == "warning") {
+                        toastr.warning(msgArr[0]);
+                    } else if (msgArr[1] == "info") {
+                        toastr.info(msgArr[0]);
+                    }
+
+                }
+            }
+
+            //Teklif tarihi
+
+            $('[name="BidDate"]').flatpickr(
+                {
+                    enableTime: false,
+                    dateFormat: "Y-m-d",
+                    locale: {
+                        months: {
+                            longhand: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+                            shorthand: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"]
+                        },
+                        weekdays: {
+                            shorthand: ["Pzt", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"]
+                        },
+
+                    }
+                }
+            );
+
+            //Firma yöneticileri sayfa yüklendiğinde
+            var firmManagers =@Html.Raw(Json.Serialize(Model.firmManagers));
+            var firmIdKod = @Html.Raw(Json.Serialize(Model.FirmIdKod));
+            var firmManagerIdKod = @Html.Raw(Json.Serialize(Model.FirmManagerIdKod));
+
+            var filterFirmManagers = $.grep(firmManagers, function (v) {
+                return v.firmIdKod == firmIdKod;
+            });
+            $('[name="FirmManagerIdKod"]').html(`<option value="">Yönetici Seçiniz...</option>`);
+            $.each(filterFirmManagers, function (ind, firmManager) {
+                if (firmManager.idKod == firmManagerIdKod) {
+                    $('[name="FirmManagerIdKod"]').append(`<option value=${firmManager.idKod} selected='selected'>${firmManager.eMail}</option>`);
+                } else {
+                    $('[name="FirmManagerIdKod"]').append(`<option value=${firmManager.idKod}>${firmManager.eMail}</option>`);
+                }
+            });
+
+            //Firma seçimi yapıldığında
+
+            $('[name="FirmIdKod"]').on('change', function (e) {
+                e.preventDefault();
+                debugger;
+                var firmIdKod = e.target.value;
+                var filterFirmManagers = $.grep(firmManagers, function (v) {
+                    return v.firmIdKod == firmIdKod;
+                });
+                $('[name="FirmManagerIdKod"]').html(`<option value="">Yönetici Seçiniz...</option>`);
+                $.each(filterFirmManagers, function (ind, val) {
+                    if (filterFirmManagers.length == 1) {
+                        $('[name="FirmManagerIdKod"]').append(`<option value=${val.idKod} selected='selected'>${val.eMail}</option>`);
+                    } else {
+                        $('[name="FirmManagerIdKod"]').append(`<option value=${val.idKod}>${val.eMail}</option>`);
+                    }
+                });
+
+            });
+
+            //Ürün Ekle sayfa yüklendiğinde
+            var products =@Html.Raw(Json.Serialize(Model.products));
+            var bidProducts=@Html.Raw(Json.Serialize(Model.bidProducts));
+
+            $.each(bidProducts, function (ind, bidProduct) {
+
+                var html = "";
+                html += `<tr class="rowProduct">`;
+
+                html += `<td>`;
+                html += `<i class="fas fa-times-circle deleteProduct text-danger"></i>`;
+                html += `<input type="hidden" class="hdnDiscount" name="hdnDiscount" value="${bidProduct.count*bidProduct.unitPrice * (bidProduct.discount / 100)}" />`;
+                html += `<input type="hidden" class="hdnTotal" name="hdnTotal" value="${bidProduct.count*bidProduct.unitPrice}" />`;
+                html += `</td>`;
+
+                html += `<td>`;
+                html += `<select name="ProductIdKods" data-control="select2" data-placeholder="Ürün Seçiniz..." productattr="${bidProduct.productIdKod}" class="form-select form-select-sm Product br0">`;
+                html += `<option value="">Ürün Seçiniz...</option>`;
+                $.each(products, function (ind, product) {
+                    if (bidProduct.productIdKod == product.idKod) {
+                        html += `<option value="${product.idKod}" selected>${product.productCode} / ${product.productName}</option>`;
+                    } else {
+                        html += `<option value="${product.idKod}">${product.productCode} / ${product.productName}</option>`;
+                    }
+
+                })
+                html += `</select>`;
+                html += `</td>`;
+
+                html += CreateElement("Counts", "Count", bidProduct.count, "", "Adet");
+
+                html += CreateElement("UnitPrices", "UnitPrice Money", ConvertToMoney(bidProduct.unitPrice), "", "₺");
+
+                html += CreateElement("Discounts", "Discount", bidProduct.discount, "", "%");
+
+                html += CreateElement("DiscountUnitPrices", "DiscountUnitPrice Money", ConvertToMoney(bidProduct.discountUnitPrice), "readonly", "₺");
+
+                html += CreateElement("SubTotals", "SubTotal Money", ConvertToMoney(bidProduct.subTotal), "readonly", "₺");
+
+                html += `</tr>`;
+
+                $('#tbodyProducts').append(html);
+                $('.Product').select2();
+
+            });
+            $('.Money').mask("#.##0,00", { reverse: true });
+            ProductArrayFill();
+
+            //Yeni ürün Ekle
+
+            $('#addNewProduct').on('click', function () {
+                debugger;
+                var html = "";
+                html += `<tr class="rowProduct">`;
+
+                html += `<td>`;
+                html += `<i class="fas fa-times-circle deleteProduct text-danger"></i>`;
+                html += `<input type="hidden" class="hdnDiscount" name="hdnDiscount" value="0" />`;
+                html += `<input type="hidden" class="hdnTotal" name="hdnTotal" value="0" />`;
+                html += `</td>`;
+
+                html += `<td>`;
+                html += `<select name="ProductIdKods" data-control="select2" data-placeholder="Ürün Seçiniz..." productattr="" class="form-select form-select-sm Product br0">`;
+                html += `<option value="">Ürün Seçiniz...</option>`;
+                $.each(products, function (ind, product) {
+                    html += `<option value="${product.idKod}">${product.productCode} / ${product.productName}</option>`;
+                })
+                html += `</select>`;
+                html += `</td>`;
+
+                html += CreateElement("Counts","Count","1","", "Adet");
+
+                html += CreateElement("UnitPrices","UnitPrice Money","0","", "₺");
+
+                html += CreateElement("Discounts", "Discount", "0","", "%");
+
+                html += CreateElement("DiscountUnitPrices", "DiscountUnitPrice Money", "0", "readonly", "₺");
+
+                html += CreateElement("SubTotals", "SubTotal Money", "0","readonly", "₺");
+
+                html += `</tr>`;
+
+                $('#tbodyProducts').append(html);
+                $('.Product').select2();
+                ProductArrayFill();
+                $('.Money').mask("#.##0,00", { reverse: true });
+            });
+
+            //Tablo satır sil
+
+            $('body').delegate(".deleteProduct", "click", function () {
+                var ind = $('.deleteProduct').index(this);
+                $("[name='StrTotalPrice']").val(ConvertToMoney(ConvertMoneyToNumber($("[name='StrTotalPrice']").val()) - $("[name='hdnTotal']").eq(ind).val()));
+                $("[name='StrTotalDiscount']").val(ConvertToMoney(ConvertMoneyToNumber($("[name='StrTotalDiscount']").val()) - $("[name='hdnDiscount']").eq(ind).val()));
+                $("[name='StrGeneralTotal']").val(ConvertToMoney(ConvertMoneyToNumber($("[name='StrGeneralTotal']").val()) - ConvertMoneyToNumber($("[name='SubTotals']").eq(ind).val())));
+                $(".rowProduct").eq(ind).remove();
+                ProductArrayFill();
+            })
+
+            //Ürün seçme işlemi
+
+            $('body').delegate("select.Product", "change", function (e) {
+                var isAdded = false;
+                var ind = $("select.Product").index(this);
+                var preVal = $(this).attr("productattr");
+                var newVal = $(this).val();
+                $.each(productsAttrArr, function (arrInd, val) {
+                    if (ind != arrInd) {
+                        if (val == newVal) {
+                            isAdded = true;
+                        }
+                    }
+
+                })
+
+                if (isAdded && newVal != "") {
+                    Swal.fire({
+                        title: "Aynı ürünü ekleyemezsiniz...",
+                        icon: "warning",
+                        showCancelButton: false,
+                        confirmButtonText: "Tamam"
+                    });
+                    $("select.Product").eq(ind).val(preVal).change();
+                } else {
+                    debugger;
+                    ProductArrayFill();
+                    $("select.Product").eq(ind).attr("productattr", newVal);
+
+                    var productIdKod = e.target.value;
+                    var filterProducts = $.grep(products, function (v) {
+                        return v.idKod == productIdKod;
+                    });
+                    var unitPrice;
+                    if (filterProducts.length == 0) {
+                        unitPrice = 0;
+                    } else {
+                        if (filterProducts[0].unitPrice == null) {
+                            unitPrice = 0;
+                        } else {
+                            unitPrice = filterProducts[0].unitPrice;
+                        }
+                    }
+
+                    $(".UnitPrice").eq(ind).val(ConvertToMoney(unitPrice));
+                    $(".hdnTotal").eq(ind).val(ConvertToMoney(unitPrice));
+
+                    SubTotalCalculate(ind);
+
+                }
+
+            })
+
+            //Count değiştiğinde ara toplam hesaplama
+            $('body').delegate(".Count", "keyup", function () {
+                var ind = $('.Count').index(this);
+                SubTotalCalculate(ind);
+            })
+
+            //UnitPrice değiştiğinde ara toplam hesaplama
+            $('body').delegate(".UnitPrice", "keyup", function () {
+                var ind = $('.UnitPrice').index(this);
+                SubTotalCalculate(ind);
+            })
+
+            //Discount değiştiğinde ara toplam hesaplama
+            $('body').delegate(".Discount", "keyup", function () {
+                var ind = $('.Discount').index(this);
+                SubTotalCalculate(ind);
+            })
+
+            //Rakam dışındaki karakter girilmesini engelleme
+            $('body').delegate(".Number", "keyup", function () {
+                if ($(this).val().match(/[^0-9]/g, '')) {
+                    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                }
+
+            })
+
+            //Ara Toplam hesaplama
+            function SubTotalCalculate(ind) {
+
+                var count = $(".Count").eq(ind).val();
+                var unitPrice = $(".UnitPrice").eq(ind).val();
+                unitPrice = ConvertMoneyToNumber(unitPrice);
+                var discount = $(".Discount").eq(ind).val();
+                $(".DiscountUnitPrice").eq(ind).val(ConvertToMoney(unitPrice * ((100 - discount) / 100)));
+                $(".SubTotal").eq(ind).val(ConvertToMoney(count * unitPrice * ((100 - discount) / 100)));
+                $(".hdnDiscount").eq(ind).val((count * unitPrice * (discount / 100)).toFixed(2));
+                $(".hdnTotal").eq(ind).val((count * unitPrice).toFixed(2));
+
+                var subTotal = 0;
+                var generalTotal = 0;
+                var hdnDiscount = 0;
+                $(".SubTotal").each(function () {
+                    console.log($(this).val());
+                    subTotal += parseFloat(ConvertMoneyToNumber($(this).val()));
+                    console.log(subTotal);
+                });
+
+                $(".hdnTotal").each(function () {
+
+                    generalTotal += parseFloat($(this).val());
+                });
+
+                $(".hdnDiscount").each(function () {
+
+                    hdnDiscount += parseFloat($(this).val());
+                });
+
+                $("[name='StrTotalPrice']").val(ConvertToMoney(generalTotal));
+                $("[name='StrTotalDiscount']").val(ConvertToMoney(hdnDiscount));
+                $("[name='StrGeneralTotal']").val(ConvertToMoney(subTotal));
+            }
+            //Para formatına çevirme
+            function ConvertToMoney(value) {
+                var money = value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace(".", "#");
+                money = money.replace(",", ".").replace("#", ",")
+                return money;
+            }
+            //Para formatını sayıya çevirme
+            function ConvertMoneyToNumber(value) {
+                var number = value.replace(".", "").replace(",", ".");
+                return number;
+            }
+
+            //Teklif mail gönderme
+            $('#btnSent').on('click', function () {
+                $('[name="BidStatusStr"]').val("Sent");
+                var isValid = FormValidation();
+                if (isValid) {
+                    $('#overlay').css("display", "block");
+                    $('#kt_bid_edit_form').submit();
+                }
+            })
+
+            //Form validasyon
+
+
+            function FormValidation() {
+                var isValid = true;
+                if ($('[name="FirmIdKod"]').val() == "") {
+                    toastr.warning("Firma bilgisini giriniz...");
+                    isValid = false;
+                }
+                if ($('[name="FirmManagerIdKod"]').val() == "") {
+                    toastr.warning("Firma yönetici bilgisini giriniz...");
+                    isValid = false;
+                }
+                if ($('[name="BidDate"]').val() == "") {
+                    toastr.warning("Teklif tarihini giriniz...");
+                    isValid = false;
+                }
+                if ($('[name="GeneralRequirements"]').val() == "") {
+                    toastr.warning("Teklif şartlarını giriniz...");
+                    isValid = false;
+                }
+                return isValid;
+            }
+
+            //Product Array
+            function ProductArrayFill() {
+                productsAttrArr = [];
+                $("select.Product").each(function () {
+                    productsAttrArr.push($(this).val());
+                });
+            }
+
+            //Teklif şartı
+            var generalRequirements=@Html.Raw(Json.Serialize(Model.requirements));
+            $('[name="GeneralRequirement"]').on('change', function (e) {
+                debugger;
+                e.preventDefault();
+                var generalRequirementIdKod = e.target.value;
+                var filterGeneralRequirements = $.grep(generalRequirements, function (v) {
+                    return v.idKod == generalRequirementIdKod;
+                });
+                console.log(filterGeneralRequirements);
+                $('[name="GeneralRequirements"]').val(filterGeneralRequirements[0].requirementContent);
+            });
+
+            //PDF indirme
+            $('#btnPdf').on("click", async function () {
+                debugger;
+                $("#btnPdfSpinner").css("display", "block");
+                $("#btnPdf").css("display", "none");
+                var fileName = $('[name="IdKod"]').val();
+                await $.ajax({
+                    url: '/Bid/HtmlToPdfSingle?bidIdKod=' + fileName,
+                    type: 'POST',
+                    data: JSON.stringify(fileName),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response) {
+                            window.open('/Bid/DownloadPdf?bidIdKod=' + fileName, '_blank');
+                            $("#btnPdfSpinner").css("display", "none");
+                            $("#btnPdf").css("display", "block");
+                        }
+                        else {
+                            toastr.error('PDF oluşturulurken hata oluştu.');
+                            $("#btnPdfSpinner").css("display", "none");
+                            $("#btnPdf").css("display", "block");
+                        }
+
+                    },
+                    error: function (error) {
+
+                    }
+                });
+
+            });
+
+        });
+
+        //Tablo içindeki  Count,Unitprice,Discount,DiscountUnitPrice,SubTotal elementlerini oluşturma.
+        function CreateElement(name,className,value,readonly,faIconText) {
+            var html = ``;
+            html += `<td>`;
+            html += `<div class="form-group">`;
+            html += `<div class="input-group input-group-sm">`;
+            html += `<input type="text" class="form-control br0 ${className}" name=${name} value=${value} ${readonly}>`;
+            html += `<div class="input-group-append">`;
+            html += `<span class="input-group-text br0 spanIcon">`;
+            html += `<i class="fas faicon">${faIconText}</i>`;
+            html += `</span>`;
+            html += `</div>`;
+            html += `</div>`;
+            html += `</div>`;
+            html += `</td>`;
+
+            return html;
+        }
+
+    </script>
+
+
+}
+
+
+
+
+
+
+

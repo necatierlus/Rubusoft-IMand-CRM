@@ -1,0 +1,208 @@
+﻿@model DeviceModel
+@{
+    ViewData["Title"] = "DeviceEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .form-group {
+        margin-bottom: 1.75em;
+    }
+</style>
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Parça Düzenle</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="/Device/Devices" class="text-muted text-hover-primary">Parçalar</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Parça Düzenle</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-body p-0">
+                <div class="wizard wizard-1" id="kt_projects_add" data-wizard-state="step-first" data-wizard-clickable="true">
+                    <!--begin::Wizard Body-->
+                    <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                        <div class="col-xl-12 col-xxl-7">
+                            <!--begin::Form Wizard-->
+                            <form class="form" id="kt_devices_edit_form" asp-controller="Device" asp-action="DeviceEdit" method="post" enctype="multipart/form-data">
+                                <!--begin::Step 1-->
+                                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                    <h3 class="mb-10 font-weight-bold text-dark">Parça Düzenle:</h3>
+                                    <div class="row">
+                                        <input type="hidden" asp-for="IdKod" name="IdKod" />
+                                        <div class="col-xl-12">
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label required">Parça Adı</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="DeviceName" placeholder="" name="DeviceName" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label required">Parça kodu</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="DeviceCode" placeholder="" name="DeviceCode" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Standartlar</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <textarea class="form-control form-control-lg form-control-solid" rows="3" asp-for="Standards" name="Standards"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Genel Özellikler</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <textarea class="form-control form-control-lg form-control-solid" rows="3" asp-for="GeneralFeatures" name="GeneralFeatures"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Teknik Özellikler</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <textarea class="form-control form-control-lg form-control-solid" rows="3" asp-for="Specification" name="Specification"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Parça Fotoğrafı</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-outline ml-1" data-kt-image-input="true" style="background-image: url(/assets/media/devices/@Model.DevicePhoto)">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-300px h-300px" style="background-image: url(/assets/media/devices/@Model.DevicePhoto)"></div>
+                                                        <!--end::Preview existing avatar-->
+                                                        <!--begin::Label-->
+                                                        <label class="btn btn-icon btn-active-color-primary w-50px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Fotoğraf Değiştir">
+                                                            <i class="bi bi-plus-circle-fill"><span style="font-style:normal;">Ekle</span></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" name="DevicePhoto" asp-for="DevicePhoto" accept=".png, .jpg, .jpeg" />
+                                                            <input type="hidden" name="devicePhoto_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <!--begin::Cancel-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Fotoğraf İptal">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Cancel-->
+                                                        <!--begin::Remove-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Fotoğraf Sil">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+                                                    <!--begin::Hint-->
+                                                    <div class="form-text">Fotoğraf tipi: png, jpg, jpeg.</div>
+                                                    <!--end::Hint-->
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Fiyat</label>
+                                                <div class="col-lg-3 col-xl-3">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="UnitPrice" placeholder="" name="UnitPrice" />
+                                                </div>
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Stok Miktarı</label>
+                                                <div class="col-lg-3 col-xl-3">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="UnitInStock" placeholder="" name="UnitInStock" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Step 1-->
+                                <!--begin::Actions-->
+                                <div class="d-flex justify-content-between border-top mt-5 pt-10">
+                                    <div class="mr-2">
+                                        <button type="submit" id="kt_edit_device_submit" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4">Güncelle</button>
+                                    </div>
+                                </div>
+                                <!--end::Actions-->
+                            </form>
+                            <!--end::Form Wizard-->
+                        </div>
+                    </div>
+                    <!--end::Wizard Body-->
+                </div>
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+@section Scripts
+{
+    <script src="~/assets/js/custom/apps/devices/edit.js"></script>
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+        };
+
+        var msg;
+        if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+            msg = '@Html.Raw((string)TempData["message"])';
+            if (msg != null) {
+                msgArr = msg.split('|');
+                if (msgArr[1] == "success") {
+                    toastr.success(msgArr[0]);
+                } else if (msgArr[1] == "error") {
+                    toastr.error(msgArr[0]);
+                } else if (msgArr[1] == "warning") {
+                    toastr.warning(msgArr[0]);
+                } else if (msgArr[1] == "info") {
+                    toastr.info(msgArr[0]);
+                }
+
+            }
+        }
+    </script>
+
+}
+

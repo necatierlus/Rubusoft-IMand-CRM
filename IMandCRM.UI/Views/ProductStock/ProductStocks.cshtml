@@ -1,0 +1,409 @@
+﻿@model ProductStockListModel
+@using System.Globalization;
+@{
+    ViewData["Title"] = "ProductStocks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Ürün Stok</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="/Home/Index" class="text-muted text-hover-primary">Anasayfa</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Ürün Stok Listesi</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container">
+        <!--begin::Card-->
+        <div class="card">
+            <!--begin::Card header-->
+            <div class="card-header border-0 pt-6">
+                <!--begin::Card title-->
+                <div class="card-title">
+                    <!--begin::Search-->
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <!--begin::Svg Icon | path: icons/duotone/General/Search.svg-->
+                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                    <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                        <input type="text" data-kt-productstock-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Ara" />
+                    </div>
+                    <!--end::Search-->
+                </div>
+                <!--begin::Card title-->
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
+                    <!--begin::Toolbar-->
+                    <div class="d-flex justify-content-end" data-kt-productstock-table-toolbar="base">
+                        <!--begin::Add product-->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_productstock">
+                            <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
+                                    <rect fill="#000000" opacity="0.5" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)" x="4" y="11" width="16" height="2" rx="1" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->Ürün Stok Ekle
+                        </button>
+                        <!--end::Add product-->
+
+                    </div>
+                    <!--end::Toolbar-->
+                    <!--begin::Group actions-->
+                    <div class="d-flex justify-content-end align-items-center d-none" data-kt-productstock-table-toolbar="selected">
+                        <div class="fw-bolder me-5">
+                            <span class="me-2" data-kt-productstock-table-select="selected_count"></span>Seçili
+                        </div>
+                        <button type="button" class="btn btn-danger" data-kt-productstock-table-select="delete_selected">Seçilenleri Sil</button>
+                    </div>
+                    <!--end::Group actions-->
+                </div>
+                <!--end::Card toolbar-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+                <form id="ProductStockListForm">
+                    <!--begin::Table-->
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_productstocks_table">
+                        <!--begin::Table head-->
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                <th class="w-10px pe-2">
+                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_productstocks_table .form-check-input" value="1" />
+                                    </div>
+                                </th>
+                                <th class="min-w-125px">Seri Numarası</th>
+                                <th class="min-w-125px">Ürün Adı</th>
+                                <th class="min-w-125px">Açıklama</th>
+                            </tr>
+                            <!--end::Table row-->
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody class="fw-bold text-gray-600">
+                            @foreach (var productstock in Model.productStocks)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox" value="@productstock.IdKod" name="DeleteProductStocks" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @productstock.SerialNumber
+                                    </td>
+                                    <td>
+                                        @productstock.ProductName
+                                    </td>
+                                    <td>
+                                        @productstock.Description
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                    <!--end::Table-->
+                </form>
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Card-->
+        <!--begin::Modals-->
+        <!--begin::Modal - Stock Point - Add-->
+        <div class="modal fade" id="kt_modal_add_productstock" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Form-->
+                    <form class="form" id="kt_modal_add_productstock_form" asp-controller="ProductStock" asp-action="ProductStockAdd" method="post" enctype="multipart/form-data">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_productstock_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bolder">Ürün Stok Ekle</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div id="kt_modal_add_productstock_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                            <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                            <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <!--begin::Scroll-->
+                            <div class="scroll-y me-n7 pe-7" id="kt_modal_add_productstock_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_productstock_header" data-kt-scroll-wrappers="#kt_modal_add_productstock_scroll" data-kt-scroll-offset="300px">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">Seri No</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" placeholder="" name="SerialNumber" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">Ürün Listesi</label>
+                                    <!--end::Label-->
+                                    <!--begin::Select-->
+                                    <select name="Product" data-control="select2" data-dropdown-parent="#kt_modal_add_productstock" data-placeholder="Ürün Seçiniz..." class="form-select form-select-solid">
+                                        <option value="">Ürün Seçiniz...</option>
+                                        @foreach (var product in Model.products)
+                                        {
+                                            <option value="@product.IdKod">@product.ProductName</option>
+                                        }
+                                    </select>
+                                    <!--end::Select-->
+                                </div>
+                                <!--end::Input group-->
+
+                                <div id="devices">
+
+                                </div>
+
+                            </div>
+                            <!--end::Scroll-->
+                        </div>
+                        <!--end::Modal body-->
+                        <!--begin::Modal footer-->
+                        <div class="modal-footer flex-center">
+                            <!--begin::Button-->
+                            <button type="reset" id="kt_modal_add_productstock_cancel" class="btn btn-white me-3">Vazgeç</button>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <button type="button" id="kt_modal_add_productstock_submit" class="btn btn-primary">
+                                <span class="indicator-label">Kaydet</span>
+                            </button>
+                            <!--end::Button-->
+                        </div>
+                        <!--end::Modal footer-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+        <!--end::Modal - Customers - Add-->
+        <!--end::Modals-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+@section Scripts
+{
+
+    <!--begin::Page Vendors Javascript(used by this page)-->
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <!--end::Page Vendors Javascript-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    @*<script src="~/assets/js/custom/apps/customers/list/export.js"></script>*@
+    <script src="~/assets/js/custom/apps/productstocks/list.js"></script>
+    @*<script src="~/assets/js/custom/apps/productstocks/add.js"></script>*@
+    <!--end::Page Custom Javascript-->
+    <script src="~/assets/plugins/custom/select2/select2.js"></script>
+
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+        };
+
+        var msg;
+        if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+        msg = '@Html.Raw((string)TempData["message"])';
+                if (msg != null) {
+                msgArr = msg.split('|');
+                if (msgArr[1] == "success") {
+                    toastr.success(msgArr[0]);
+                } else if (msgArr[1] == "error") {
+                    toastr.error(msgArr[0]);
+                } else if (msgArr[1] == "warning") {
+                    toastr.warning(msgArr[0]);
+                } else if (msgArr[1] == "info") {
+                    toastr.info(msgArr[0]);
+                }
+            }
+        }
+        $(function () {
+
+            var modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_productstock'));
+            var form = document.querySelector('#kt_modal_add_productstock_form');
+
+            var deviceStocks=@Html.Raw(Json.Serialize(Model.deviceStocks));
+            var products=@Html.Raw(Json.Serialize(Model.products));
+            var productStocks =@Html.Raw(Json.Serialize(Model.productStocks));
+            $('[name="Product"]').on("change", function (e) {
+                e.preventDefault();
+ 
+                var productIdKod = e.target.value;
+                var filteredProduct = $.grep(products, function (p) {
+                    return p.idKod === productIdKod;
+                });
+                var html = ``;
+                if (filteredProduct.length > 0) {
+                    var devices = filteredProduct[0].devices.split(',');
+                    $.each(devices, function (ind, val) {
+                        var filteredDeviceStocks = $.grep(deviceStocks, function (d) {
+                            return d.deviceIdKod === val;
+                        });
+                        html += CreateSelect(filteredDeviceStocks);
+                    });
+                    $("#devices").html(html);
+                    $('[name="DeviceStockIdKod"]').select2();
+                } else {
+                    $("#devices").html(html);
+                }
+
+
+            });
+
+            $("#kt_modal_add_productstock_close").on("click", function () {
+                Swal.fire({
+                    title: "Kapatmak istediğinizden emin misiniz?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "Hayır!",
+                    confirmButtonText: "Evet!"
+                }).then(function (result) {
+                    if (result.value) {
+                        form.reset();
+                        $('[name="Product"]').val("").trigger('change');
+                        modal.hide();
+                    }
+                });
+            });
+            $("#kt_modal_add_productstock_cancel").on("click", function () {
+                Swal.fire({
+                    title: "İptal etmek istediğinizden emin misiniz?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "Hayır!",
+                    confirmButtonText: "Evet!"
+                }).then(function (result) {
+                    if (result.value) {
+                        form.reset();
+                        $('[name="Product"]').val("").trigger('change');
+                        modal.hide();
+
+                    }
+                });
+            });
+            $("#kt_modal_add_productstock_submit").on("click", function () {
+                var validation = FormValidation();
+                if (validation) {
+                    $('#kt_modal_add_productstock_form').submit();
+                }
+            });
+
+        });
+
+        function CreateSelect(filteredDeviceStocks) {
+            var html = ``;
+            html += `<div class="fv-row mb-7">`;
+            html += `<label class="required fs-6 fw-bold mb-2">Parça</label>`;
+            html += `<select name="DeviceStockIdKod" data-control="select2" data-dropdown-parent="#kt_modal_add_productstock" data-placeholder="Cihaz Seçiniz..." class="form-select form-select-solid">`;
+            html += `<option value="">Seçiniz...</option>`;
+            $.each(filteredDeviceStocks, function (ind, val) {
+                html += `<option value="${val.idKod}">${val.serialNumber}/${val.deviceName}/${val.stockPointName}</option>`;
+            });
+            html += `</select>`;
+            html += `</div>`;
+            return html;
+        }
+
+        //Form validasyon
+
+        function FormValidation() {
+            var isValid = true;
+            if ($('[name="SerialNumber"]').val() == "") {
+                toastr.warning("Seri numarasını giriniz.");
+                isValid = false;
+            }
+            if ($('[name="Product"]').val() == "") {
+                toastr.warning("Ürün seçiniz.");
+                isValid = false;
+            }
+            if ($('[name="DeviceStockIdKod"]').val() == "") {
+                toastr.warning("Tüm parçaları seçiniz.");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+    </script>
+
+}
+
+
+
+
+

@@ -1,0 +1,153 @@
+﻿@model GeneralRequirementModel
+@{
+    ViewData["Title"] = "GeneralRequirementEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .form-group {
+        margin-bottom: 1.75em;
+    }
+</style>
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Teklif Şartları</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="/GeneralRequirement/GeneralRequirements" class="text-muted text-hover-primary">Teklif Şartları Listesi</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Teklif Şartı Düzenle</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Card title-->
+                <div class="card-title fs-3 fw-bolder">Teklif Şartı Düzenle</div>
+                <!--end::Card title-->
+            </div>
+            <!--end::Card header-->
+            <div class="card-body p-0">
+                <div class="wizard wizard-1" id="kt_generalrequirements_add" data-wizard-state="step-first" data-wizard-clickable="true">
+                    <!--begin::Wizard Body-->
+                    <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                        <div class="col-xl-12 col-xxl-12">
+                            <!--begin::Form Wizard-->
+                            <form class="form" id="kt_generalrequirements_edit_form" asp-controller="GeneralRequirement" asp-action="GeneralRequirementEdit" method="post">
+                                <!--begin::Step 1-->
+                                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                    <input type="hidden" asp-for="IdKod" name="IdKod" />
+                                    <!--begin::Input group-->
+                                    <div class="form-group row fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label required">Başlık</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid" asp-for="RequirementTitle" placeholder="" name="RequirementTitle" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="form-group row fv-row">
+                                        <label class="fs-6 fw-bold form-label required">İçerik</label>
+                                        <textarea class="form-control form-control-lg form-control-solid" rows="15" asp-for="RequirementContent" name="RequirementContent"></textarea>
+                                    </div>
+                                    <!--end::Input group-->
+                                </div>
+                                <!--end::Step 1-->
+                                <!--begin::Actions-->
+                                <div class="d-flex justify-content-between border-top mt-5 pt-10">
+                                    <div class="mr-2">
+                                        <button type="submit" id="kt_edit_generalrequirement_submit" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4">Kaydet</button>
+                                    </div>
+                                </div>
+                                <!--end::Actions-->
+                            </form>
+                            <!--end::Form Wizard-->
+                        </div>
+                    </div>
+                    <!--end::Wizard Body-->
+                </div>
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+@section Scripts
+{
+    <script src="~/assets/js/custom/apps/generalrequirements/edit.js"></script>
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+        };
+
+        var msg;
+        if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+            msg = '@Html.Raw((string)TempData["message"])';
+            if (msg != null) {
+                msgArr = msg.split('|');
+                if (msgArr[1] == "success") {
+                    toastr.success(msgArr[0]);
+                } else if (msgArr[1] == "error") {
+                    toastr.error(msgArr[0]);
+                } else if (msgArr[1] == "warning") {
+                    toastr.warning(msgArr[0]);
+                } else if (msgArr[1] == "info") {
+                    toastr.info(msgArr[0]);
+                }
+
+            }
+        }
+    </script>
+
+}
+
+

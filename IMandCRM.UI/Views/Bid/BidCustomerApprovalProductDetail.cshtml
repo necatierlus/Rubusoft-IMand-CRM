@@ -1,0 +1,269 @@
+﻿@model BidCustomerApprovalModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Rubusoft | CRM</title>
+    <meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+    <meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular 11, VueJs, React, Laravel, admin themes, web design, figma, web development, ree admin themes, bootstrap admin, bootstrap dashboard" />
+    <link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+</head>
+<body>
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container">
+            <!--begin::Hidden-->
+            <input type="hidden" asp-for="@Model.bid.IdKod" name="BidIdKod" />
+            <input type="hidden" asp-for="@Model.bid.BidStatus" name="BidStatus" />
+            <!--end::Hidden-->
+            <div class="card">
+                <!--begin::Card body-->
+                <div class="card-body p-0">
+                    <!--begin::Wrapper-->
+                    <div class="card-px py-5 my-5">
+
+                        <!--begin::Scroll-->
+                        <div class="scroll-y me-n7 pe-7" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-offset="200px">
+                            <div style="height: 30px; width: 100%; display: flex; align-items: center; justify-content: center;">
+                                <div>
+                                    <h4><u>ÜRÜN DETAYLARI</u></h4>
+                                </div>
+                            </div>
+                            <div style="width:100%;">
+                                <div class="row gy-5 g-xl-8">
+                                    @foreach (var bidProduct in Model.bidProductDetailList)
+                                    {
+                                        <div class="col-xl-2"></div>
+                                        <!--begin::Col-->
+                                        <div class="col-xl-8">
+                                            <!--begin::List Widget 6-->
+                                            <div class="card card-xl-stretch mb-xl-8 text-inverse-light">
+                                                <!--begin::Body-->
+                                                <div class="card-body pt-0">
+                                                    <!--begin::Item-->
+                                                    <div class="align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">
+                                                        <!--begin::Title-->
+                                                        <div class="flex-grow-1 me-2 mb-4">
+                                                            <span class="fw-bolder text-gray-800 fs-6">Ürün Adı:</span>
+                                                            <span class="fw-bold" style="color:#000;font-weight:100!important;">@bidProduct.ProductName</span>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                        <!--begin::Title-->
+                                                        <div class="flex-grow-1 me-2">
+                                                            <span class="fw-bolder text-gray-800 fs-6">Ürün Kodu:</span>
+                                                            <span class="fw-bold" style="color:#000;font-weight:100!important;">@bidProduct.ProductCode</span>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Item-->
+                                                    <!--begin::Item-->
+                                                    <div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">
+                                                        <!--begin::Title-->
+                                                        <div class="flex-grow-1 me-2" style="width:100%;display:flex;justify-content:center;flex-direction:column;align-items:center;">
+                                                            <span class="fw-bolder text-gray-800 fs-6">Ürün Fotoğrafı</span>
+                                                            <div style="width:100%;display:flex;justify-content:center;">
+                                                                <img src="~/assets/media/products/@bidProduct.ProductPhoto" style="object-fit:cover;width:70%;height:70%;margin-top:10px;" />
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Item-->
+                                                    <!--begin::Item-->
+                                                    <div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">
+                                                        <!--begin::Title-->
+                                                        <div class="flex-grow-1 me-2">
+                                                            <span class="fw-bolder text-gray-800 fs-6">Standartlar</span>
+                                                            <span class="fw-bold d-block" style="color:#000;font-weight:100!important;">@bidProduct.Standards</span>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Item-->
+                                                    <!--begin::Item-->
+                                                    <div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">
+                                                        <!--begin::Title-->
+                                                        <div class="flex-grow-1 me-2">
+                                                            <span class="fw-bolder text-gray-800 fs-6">Genel Özellikler</span>
+                                                            <span class="fw-bold d-block" style="color:#000;font-weight:100!important;">@bidProduct.GeneralFeatures</span>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Item-->
+                                                    <!--begin::Item-->
+                                                    <div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">
+                                                        <!--begin::Title-->
+                                                        <div class="flex-grow-1 me-2">
+                                                            <span class="fw-bolder text-gray-800 fs-6">Cihaz ve Aparatlar</span>
+                                                            <span class="fw-bold d-block" style="color:#000;font-weight:100!important;" id="devices-@bidProduct.ProductIdKod"></span>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Item-->
+                                                    <!--begin::Item-->
+                                                    <div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">
+                                                        <!--begin::Title-->
+                                                        <div class="flex-grow-1 me-2">
+                                                            <span class="fw-bolder text-gray-800 fs-6">Teknik Özellikler</span>
+                                                            <span class="fw-bold d-block" style="white-space: pre-wrap;color:#000;font-weight:100!important;">@bidProduct.Specification</span>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Item-->
+                                                </div>
+                                                <!--end::Body-->
+                                            </div>
+                                            <!--end::List Widget 6-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <div class="col-xl-2"></div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--end::Scroll-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Card body-->
+                <!--begin::Card footer-->
+                <div class="card-footer p-0">
+                    <!--begin::Wrapper-->
+                    <div class="card-px text-center py-5 my-5" style="display:flex;justify-content:center;align-items:center;">
+                        <!--begin::Button-->
+                        <button type="button" id="btnPdf" class="btn btn-warning me-3 w-150px"><i class="far fa-file-pdf"></i>&nbsp;PDF İndir</button>
+                        <button type="button" id="btnPdfSpinner" class="btn btn-warning me-3 w-150px" style="display:none;"><i class="fas fa-spinner fa-spin"></i>&nbsp;İndiriliyor</button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Card footer-->
+            </div>
+            <!--end::Card-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+    <!--begin::Javascript-->
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <!--end::Page Custom Javascript-->
+    <!--end::Javascript-->
+</body>
+</html>
+<script>
+
+    $(function () {
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+            };
+
+
+            var msg;
+            if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+                msg = '@Html.Raw((string)TempData["message"])';
+                if (msg != null) {
+                    msgArr = msg.split('|');
+                    if (msgArr[1] == "success") {
+                        toastr.success(msgArr[0]);
+                    } else if (msgArr[1] == "error") {
+                        toastr.error(msgArr[0]);
+                    } else if (msgArr[1] == "warning") {
+                        toastr.warning(msgArr[0]);
+                    } else if (msgArr[1] == "info") {
+                        toastr.info(msgArr[0]);
+                    }
+
+                }
+            }
+
+        var bidProducts =@Html.Raw(Json.Serialize(Model.bidProductDetailList));
+        var devices =@Html.Raw(Json.Serialize(Model.devices));
+
+        $.each(bidProducts, function (ind, bidProduct) {
+            if (bidProduct.devices != null) {
+                var devicesArr = bidProduct.devices.split(',');
+                $.each(devicesArr, function (ind, deviceIdKod) {
+                    var filterDevice = $.grep(devices, function (device) {
+                        return device.idKod == deviceIdKod;
+                    });
+                    if (filterDevice.length != 0) {
+                        if (ind == devicesArr.length - 1) {
+                            $('#devices-' + bidProduct.productIdKod).append("* " + filterDevice[0].deviceCode + ": " + filterDevice[0].deviceName);
+                        } else {
+                            $('#devices-' + bidProduct.productIdKod).append("* " + filterDevice[0].deviceCode + ": " + filterDevice[0].deviceName + ",<br/> ");
+                        }
+                    }
+                })
+            }
+        })
+
+        //PDF indirme
+        $('#btnPdf').on("click", async function () {
+            debugger;
+            $("#btnPdfSpinner").css("display", "block");
+            $("#btnPdf").css("display", "none");
+            var fileName = $('[name="BidIdKod"]').val();
+            await $.ajax({
+                url: '/Bid/HtmlToPdfProductDetail?bidIdKod=' + fileName,
+                type: 'POST',
+                data: JSON.stringify(fileName),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response) {
+                        window.open('/Bid/DownloadPdf?bidIdKod=' + fileName, '_blank');
+                        $("#btnPdfSpinner").css("display", "none");
+                        $("#btnPdf").css("display", "block");
+                    }
+                    else {
+                        toastr.error('PDF oluşturulurken hata oluştu.');
+                        $("#btnPdfSpinner").css("display", "none");
+                        $("#btnPdf").css("display", "block");
+                    }
+
+                },
+                error: function (error) {
+
+                }
+            });
+
+        });
+
+
+    });
+
+</script>

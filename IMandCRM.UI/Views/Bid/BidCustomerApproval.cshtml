@@ -1,0 +1,444 @@
+﻿@model BidCustomerApprovalModel
+@using System.Globalization
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Rubusoft | CRM</title>
+    <meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+    <meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular 11, VueJs, React, Laravel, admin themes, web design, figma, web development, ree admin themes, bootstrap admin, bootstrap dashboard" />
+    <link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+</head>
+<body>
+
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container">
+            <!--begin::Hidden-->
+            <input type="hidden" asp-for="@Model.bid.IdKod" name="BidIdKod" />
+            <input type="hidden" asp-for="@Model.bid.BidStatus" name="BidStatus" />
+            <!--end::Hidden-->
+            <div class="card">
+                <!--begin::Card body-->
+                <div class="card-body p-0">
+                    <!--begin::Wrapper-->
+                    <div class="card-px py-5 my-5">
+                        <!--begin::Scroll-->
+                        <div class="scroll-y me-n7 pe-7" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-offset="200px">
+                            <img class="demo-bg" src="/assets/media/appsettings/rubusoft_filigran.png" alt="" style="position: absolute;opacity: 0.1;width: 99%;transform: rotate( 345deg );margin-top:500px;">
+                            <div style="width:100%; height:120px; display:flex;align-items:center;background-image: linear-gradient(to right, #fee9e9 , #fff)" class="text-inverse-light">
+                                <div style="width:210px;margin-left:10px;">
+                                    <img src="~/assets/media/appsettings/@Model.appSetting.Logo" style="width:100%;border-radius:5px;" />
+                                </div>
+                                <div style="font-size:2.3rem;font-weight:bold;display:flex;flex-direction:column;justify-content:center; width:95%;">
+                                    <span style="text-align:center;">@Model.appSetting.FirmName</span>
+                                </div>
+                            </div>
+                            <div style="height: 100px; width: 100%; display: flex; align-items: center; justify-content: center;">
+                                <div>
+                                    <h2><u>PROFORMA</u></h2>
+                                </div>
+                            </div>
+                            <div style="width:100%;">
+                                <!--begin::Teklif bilgileri-->
+                                <div class="mb-5">
+                                    <h3>Teklif Bilgileri</h3>
+                                </div>
+                                <div class="separator mb-5"></div>
+                                <div class="row fs-7">
+                                    <div class="col-md-10 text-end fw-bold">
+                                        Teklif No
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Model.bid.BidNumber
+                                    </div>
+                                </div>
+                                <div class="row fs-7">
+                                    <div class="col-md-10 text-end fw-bold">
+                                        Teklif Tarihi
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Model.bid.BidDate.ToString("dd.MM.yyyy")
+                                    </div>
+                                </div>
+                                <div class="row fs-7">
+                                    <div class="col-md-10 text-end fw-bold">
+                                        Teklif Geçerlilik Tarihi
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Model.bid.BidValidityDate.ToString("dd.MM.yyyy")
+                                    </div>
+                                </div>
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        Yetkili
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Model.createdPersonal.FirstName @Model.createdPersonal.LastName
+                                    </div>
+                                </div>
+                                @if (Model.createdPersonal.PhoneNumber != null)
+                                {
+                                    <div class="row fs-7">
+                                        <div class="col-md-2 fw-bold">
+                                            Gsm
+                                        </div>
+                                        <div class="col-md-10">
+                                            +90 @Model.createdPersonal.PhoneNumber
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.appSetting.PhoneNumber != null)
+                                {
+                                    <div class="row fs-7">
+                                        <div class="col-md-2 fw-bold">
+                                            Telefon
+                                        </div>
+                                        <div class="col-md-10">
+                                            +90 @Model.appSetting.PhoneNumber
+                                        </div>
+                                    </div>
+                                }
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        E-mail
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Model.createdPersonal.Email
+                                    </div>
+                                </div>
+
+                                @if (Model.appSetting.TaxOffice != null)
+                                {
+                                    <div class="row fs-7">
+                                        <div class="col-md-2 fw-bold">
+                                            Vergi Dairesi
+                                        </div>
+                                        <div class="col-md-10">
+                                            @Model.appSetting.TaxOffice
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.appSetting.TaxNumber != null)
+                                {
+                                    <div class="row fs-7">
+                                        <div class="col-md-2 fw-bold">
+                                            Vergi Numarası
+                                        </div>
+                                        <div class="col-md-10">
+                                            @Model.appSetting.TaxNumber
+                                        </div>
+                                    </div>
+                                }
+                                <!--end::Teklif bilgileri-->
+                                <!--begin::Firma bilgileri-->
+                                <div class="mb-5 mt-10">
+                                    <h3>Firma Bilgileri</h3>
+                                </div>
+                                <div class="separator mb-5"></div>
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        Firma Bilgisi
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Model.firm.TradeName
+                                    </div>
+                                </div>
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        İlgili Kişi
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Model.firmManager.FirstName @Model.firmManager.LastName
+                                    </div>
+                                </div>
+                                <div class="row fs-7">
+                                    <div class="col-md-2 fw-bold">
+                                        E-mail
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Model.firmManager.EMail
+                                    </div>
+                                </div>
+                                <!--end::Firma bilgileri-->
+                            </div>
+                            <div style="width:100%; height:240px;display: flex; align-items: center; justify-content: center;">
+                                Sayın: @Model.firmManager.FirstName  @Model.firmManager.LastName
+                                <br /><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firmamızdan teklif almakla göstermiş olduğunuz ilgi ve güvene öncelikle teşekkür ederiz. İhtiyacınız olan ürün/ürünler ile ilgili istemiş olduğunuz fiyat teklifimiz aşağıda bilginize sunulmaktadır.
+                            </div>
+                            <div style="height: 20px; width: 100%; display: flex; align-items: center; justify-content: center;">
+                                <div>
+                                    <h4><u>ÜRÜN FİYAT LİSTESİ</u></h4>
+                                </div>
+                            </div>
+                            <!--begin::Table container-->
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table table-striped gy-7 gs-7">
+                                    <!--begin::Head-->
+                                    <thead class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                                        <tr>
+                                            <th class="min-w-90px">Ürün Kodu</th>
+                                            <th class="min-w-350px">Ürün Adı</th>
+                                            <th class="min-w-90px text-center">Adet</th>
+                                            @if (Model.bid.UnitPriceIsShow == true)
+                                            {
+                                                <th class="min-w-90px text-center">Birim Fiyat</th>
+                                            }
+                                            @if (Model.bid.DiscountIsShow == true)
+                                            {
+                                                <th class="min-w-90px text-center">İskonto</th>
+                                            }
+                                            @if (Model.bid.DiscountUnitPriceIsShow == true)
+                                            {
+                                                <th class="min-w-90px text-center">İsk. B.Fiyat</th>
+                                            }
+                                            <th class="min-w-90px text-center">Ara Toplam</th>
+                                        </tr>
+                                    </thead>
+                                    <!--end::Head-->
+                                    <!--begin::Body-->
+                                    <tbody class="fs-6" id="tbodyProducts">
+                                        @foreach (var product in Model.bidProductDetailList)
+                                        {
+                                            <tr>
+                                                <td>@product.ProductCode</td>
+                                                <td>@product.ProductName</td>
+                                                <td class="text-center">@product.Count</td>
+                                                @if (Model.bid.UnitPriceIsShow == true)
+                                                {
+                                                    <td class="text-center">@product.UnitPrice?.ToString("C2", CultureInfo.CreateSpecificCulture("Tr"))</td>
+                                                }
+                                                @if (Model.bid.DiscountIsShow == true)
+                                                {
+                                                    <td class="text-center">@product.Discount %</td>
+                                                }
+                                                @if (Model.bid.DiscountUnitPriceIsShow == true)
+                                                {
+                                                    <td class="text-center">@product.DiscountUnitPrice?.ToString("C2", CultureInfo.CreateSpecificCulture("Tr"))</td>
+                                                }
+                                                <td class="text-center">@product.SubTotal?.ToString("C2", CultureInfo.CreateSpecificCulture("Tr"))</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <!--end::Body-->
+
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                            <!--end::Table container-->
+                            @if (Model.bid.GeneralTotalIsShow == true)
+                            {
+                                <div class="row" style="height: 20px; display: flex; align-items: center;">
+                                    <div class="col-md-9"></div>
+                                    <div class="col-md-2 text-end"><b>Toplam</b></div>
+                                    <div class="col-md-1 text-end">@Model.bid.TotalPrice?.ToString("C2", CultureInfo.CreateSpecificCulture("Tr"))</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9"></div>
+                                    <div class="col-md-3"><div class="separator mb-5 mt-5"></div></div>
+                                </div>
+                            }
+
+                            @if (Model.bid.DiscountIsShow == true)
+                            {
+                                <div class="row" style="height: 20px; display: flex; align-items: center;">
+                                    <div class="col-md-9"></div>
+                                    <div class="col-md-2 text-end"><b>Toplam İskonto</b></div>
+                                    <div class="col-md-1 text-end">@Model.bid.TotalDiscount?.ToString("C2", CultureInfo.CreateSpecificCulture("Tr"))</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9"></div>
+                                    <div class="col-md-3"><div class="separator mb-5 mt-5"></div></div>
+                                </div>
+                            }
+
+                            <div class="row" style="height: 20px; display: flex; align-items: center;">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-2 text-end"><b>Genel Toplam</b></div>
+                                <div class="col-md-1 text-end">@Model.bid.GeneralTotal?.ToString("C2", CultureInfo.CreateSpecificCulture("Tr"))</div>
+                            </div>
+
+                            <div class="separator mb-5 mt-5"></div>
+                            <div style="height:600px; width: 100%; display: flex;flex-direction:column">
+                                <div style="margin-top:40px;">
+                                    <h4><u>Genel Şartlar</u></h4>
+                                </div>
+                                <div>
+                                    <span style="white-space: pre-wrap;">@Model.bid.GeneralRequirements</span><br /><br /><br />
+                                    <span>Saygılarımızla.</span><br />
+                                    <span>@Model.appSetting.FirmName</span><br />
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Scroll-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Card body-->
+                <!--begin::Card footer-->
+                <div class="card-footer p-0">
+                    <!--begin::Wrapper-->
+                    <div class="card-px text-center py-5 my-5" style="display:flex;justify-content:center;align-items:center;">
+                        <!--begin::Button-->
+                        <button type="button" id="btnPdf" class="btn btn-warning me-3 w-150px"><i class="far fa-file-pdf"></i>&nbsp;PDF İndir</button>
+                        <button type="button" id="btnPdfSpinner" class="btn btn-warning me-3 w-150px" style="display:none;"><i class="fas fa-spinner fa-spin"></i>&nbsp;İndiriliyor</button>
+                        <!--end::Button-->
+                        @if (Model.bid.BidStatus == 4)
+                        {
+                            <!--begin::Button-->
+                            <button type="button" id="btnApproval" class="btn btn-primary w-150px">Onayla</button>
+                            <!--end::Button-->
+                        }
+                        else
+                        {
+                            <!--begin::Button-->
+                            <a href="#" class="btn btn-success me-3 w-150px">Onaylandı</a>
+                            <!--end::Button-->
+                        }
+
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Card footer-->
+            </div>
+            <!--end::Card-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+    <!--begin::Javascript-->
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <!--end::Page Custom Javascript-->
+    <!--end::Javascript-->
+</body>
+</html>
+<script>
+
+    $(function () {
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+            };
+
+
+            var msg;
+            if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+                msg = '@Html.Raw((string)TempData["message"])';
+                if (msg != null) {
+                    msgArr = msg.split('|');
+                    if (msgArr[1] == "success") {
+                        toastr.success(msgArr[0]);
+                    } else if (msgArr[1] == "error") {
+                        toastr.error(msgArr[0]);
+                    } else if (msgArr[1] == "warning") {
+                        toastr.warning(msgArr[0]);
+                    } else if (msgArr[1] == "info") {
+                        toastr.info(msgArr[0]);
+                    }
+
+                }
+            }
+
+        $('#btnApproval').on('click', function () {
+            var bidIdKod=$('[name="BidIdKod"]').val();
+            Swal.fire({
+                title: "Teklifi onaylamak istediğinizden emin misiniz?",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonText: "Hayır!",
+                confirmButtonText: "Evet!"
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Bid/BidCustomerApprovaled?bidIdKod=' + bidIdKod +'&bidStatus=CustomerApproved',
+                        type: 'GET',
+                        success: function (response) {
+                            if (response.responseStatus) {
+                                toastr.success(response.messageText);
+                                setTimeout(function () {
+                                    window.close();
+                                }, 3000);
+                            } else {
+                                toastr.error(response.messageText);
+                            }
+                        },
+                        error: function (error) {
+                            toastr.error("Hata oluştu.");
+                        }
+                    });
+                }
+            });
+        })
+
+        //PDF indirme
+        $('#btnPdf').on("click", async function () {
+            debugger;
+            $("#btnPdfSpinner").css("display", "block");
+            $("#btnPdf").css("display", "none");
+            var fileName = $('[name="BidIdKod"]').val();
+            await $.ajax({
+                url: '/Bid/HtmlToPdfSingle?bidIdKod=' + fileName,
+                type: 'POST',
+                data: JSON.stringify(fileName),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response) {
+                        window.open('/Bid/DownloadPdf?bidIdKod=' + fileName, '_blank');
+                        $("#btnPdfSpinner").css("display", "none");
+                        $("#btnPdf").css("display", "block");
+                    }
+                    else {
+                        toastr.error('PDF oluşturulurken hata oluştu.');
+                        $("#btnPdfSpinner").css("display", "none");
+                        $("#btnPdf").css("display", "block");
+                    }
+
+                },
+                error: function (error) {
+
+                }
+            });
+
+        });
+
+    });
+
+</script>

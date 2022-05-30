@@ -1,0 +1,236 @@
+﻿@model BidCustomerApprovalModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Rubusoft | CRM</title>
+    <meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+    <meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular 11, VueJs, React, Laravel, admin themes, web design, figma, web development, ree admin themes, bootstrap admin, bootstrap dashboard" />
+    <link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+</head>
+<body>
+
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container">
+            <!--begin::Hidden-->
+            <input type="hidden" asp-for="@Model.bid.IdKod" name="BidIdKod" />
+            <input type="hidden" asp-for="@Model.bid.BidStatus" name="BidStatus" />
+            <!--end::Hidden-->
+            <div class="card">
+                <!--begin::Card body-->
+                <!--begin::Wrapper-->
+                <div class="card-px py-5 my-5">
+                    <!--begin::Ürün detay bilgileri-->
+                    <div id="ProductDetailList">
+                        <!--end::Ürün bilgileri-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Container-->
+        </div>
+
+
+    </div>
+    <!--end::Post-->
+    <!--begin::Javascript-->
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <!--end::Page Custom Javascript-->
+    <!--end::Javascript-->
+</body>
+</html>
+<script>
+
+    $(function () {
+        debugger;
+        var bidProduct =@Html.Raw(Json.Serialize(Model.bidProductDetailList));
+        var appSetting =@Html.Raw(Json.Serialize(Model.appSetting));
+        var html = ``;
+        var totalCount = bidProduct.length;
+        //var totalCount = 1;
+
+        for (var j = 1; j <= totalCount; j++) {
+
+            //begin::Content
+            if (j == 1) {
+                html += `<div style="width:100%; height:1315px; border:1px solid #fff;position:relative;">`;
+                //begin:Başlık
+                html += `<div style="width:100%; height:120px; display:flex;align-items:center;background-image: linear-gradient(to right, #fee9e9 , #fff);margin-bottom:30px;" class="text-inverse-light">`;
+                html += `<div style="width:210px;margin-left:10px;">`;
+                html += `<img src="/assets/media/appsettings/${appSetting.logo}" style="width:100%;border-radius:5px;" />`;
+                html += `</div>`;
+                html += `<div style="font-size:2.3rem;font-weight:bold;display:flex;flex-direction:column;justify-content:center; width:95%;">`;
+                html += `<span style="text-align:center;">${appSetting.firmName}</span>`;
+                html += `</div>`;
+                html += `</div>`;
+                //end:Başlık
+            } else {
+                html += `<div style="width:100%; height:1331px; border:1px solid #fff;position:relative;margin-top:100px;">`;
+                //begin:Başlık
+                html += `<div style="width:100%; height:120px; display:flex;align-items:center;background-image: linear-gradient(to right, #fee9e9 , #fff);margin-top:30px;margin-bottom:30px;" class="text-inverse-light">`;
+                html += `<div style="width:210px;margin-left:10px;">`;
+                html += `<img src="/assets/media/appsettings/${appSetting.logo}" style="width:100%;border-radius:5px;" />`;
+                html += `</div>`;
+                html += `<div style="font-size:2.3rem;font-weight:bold;display:flex;flex-direction:column;justify-content:center; width:95%;">`;
+                html += `<span style="text-align:center;">${appSetting.firmName}</span>`;
+                html += `</div>`;
+                html += `</div>`;
+                //end:Başlık
+            }
+
+            //begin::Products
+            html += `<div style="width:100%;">`;
+            //begin::Row
+            html += `<div class="row gy-5 g-xl-8">`;
+
+
+            //begin::Col
+            html += `<div class="col-xl-12">`;
+            //begin::List Widget
+            html += `<div class="card card-xl-stretch mb-xl-8 text-inverse-light" style="background-color:transparent;">`;
+            //begin::Body
+            html += `<div class="card-body pt-0">`;
+            //begin::Item
+            html += `<div class="align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">`;
+            //begin::Title
+            html += `<div class="flex-grow-1 me-2">`;
+            html += `<span class="fw-bolder text-gray-800 fs-6">Ürün Adı:&nbsp;&nbsp;</span>`;
+            html += `<span class="fw-bold" style="color:#000;font-weight:100!important;">${bidProduct[j - 1].productName}</span>`;
+            html += `</div>`;
+            //end::Title
+            //begin::Title
+            html += `<div class="flex-grow-1 me-2">`;
+            html += `<span class="fw-bolder text-gray-800 fs-6">Ürün Kodu:&nbsp;&nbsp;</span>`;
+            html += `<span class="fw-bold" style="color:#000;font-weight:100!important;">${bidProduct[j - 1].productCode}</span>`;
+            html += `</div>`;
+            //end::Title
+            html += `</div>`;
+            //end::Item
+
+            //begin::Item
+            html += `<div class="d-flex align-items-center rounded p-5 mb-7">`;
+            //begin::Title
+            html += `<div class="flex-grow-1 me-2" style="width:100%;display:flex;justify-content:center;flex-direction:column;align-items:center;">`;
+            html += `<span class="fw-bolder text-gray-800 fs-6">Ürün Fotoğrafı</span>`;
+            html += `<div style="width:100%;display:flex;justify-content:center;margin-top:10px;">`;
+            html += ` <img src="/assets/media/products/${bidProduct[j-1].productPhoto}" style="object-fit:cover;width:400px;height:400px;"/>`;
+            html += `</div>`;
+            html += `</div>`;
+            //end::Title
+            html += `</div>`;
+            //end::Item
+
+
+            //begin::Item
+            html += `<div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">`;
+            //begin::Title
+            html += `<div class="flex-grow-1 me-2">`;
+            html += `<span class="fw-bolder text-gray-800 fs-6">Standartlar</span>`;
+            html += `<span class="fw-bold d-block" style="color:#000;font-weight:100!important;">${bidProduct[j - 1].standards == null ? "-" : bidProduct[j - 1].standards}</span>`;
+            html += `</div>`;
+            //end::Title
+            html += `</div>`;
+            //end::Item
+            //begin::Item
+            html += `<div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">`;
+            //begin::Title
+            html += `<div class="flex-grow-1 me-2">`;
+            html += `<span class="fw-bolder text-gray-800 fs-6">Genel Özellikler</span>`;
+            html += `<span class="fw-bold d-block" style="color:#000;font-weight:100!important;">${bidProduct[j - 1].generalFeatures == null ? "-" : bidProduct[j - 1].generalFeatures}</span>`;
+            html += `</div>`;
+            //end::Title
+            html += `</div>`;
+            //end::Item
+            //begin::Item
+            html += `<div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">`;
+            //begin::Title
+            html += `<div class="flex-grow-1 me-2">`;
+            html += `<span class="fw-bolder text-gray-800 fs-6">Cihaz ve Aparatlar</span>`;
+            html += `<span class="fw-bold d-block" style="color:#000;font-weight:100!important;" id="devices-${bidProduct[j-1].productIdKod}"></span>`;
+            html += `</div>`;
+            //end::Title
+            html += `</div>`;
+            //end::Item
+            //begin::Item
+            html += `<div class="d-flex align-items-center rounded p-5 mb-7" style="background-color:#f2f2f2;">`;
+            //begin::Title
+            html += `<div class="flex-grow-1 me-2">`;
+            html += `<span class="fw-bolder text-gray-800 fs-6">Teknik Özellikler</span>`;
+            html += `<span class="fw-bold d-block" style="white-space: pre-wrap;color:#000;font-weight:100!important;">${bidProduct[j - 1].specification == null ? "-" : bidProduct[j - 1].specification}</span>`;
+            html += `</div>`;
+            //end::Title
+            html += `</div>`;
+            //end::Item
+            html += `</div>`;
+            //end::Body
+            html += `</div>`;
+            //end::List Widget
+
+            html += `</div>`;
+            //end::Col
+
+            html += `</div>`;
+            //end::Row
+            html += `</div>`;
+            //end::Products
+
+            html += `</div>`;
+            //end::Content
+
+
+        }
+
+
+        $('#ProductDetailList').html(html);
+
+        var devices =@Html.Raw(Json.Serialize(Model.devices));
+
+        $.each(bidProduct, function (ind, bidProduct) {
+            if (bidProduct.devices != null) {
+                var devicesArr = bidProduct.devices.split(',');
+                $.each(devicesArr, function (ind, deviceIdKod) {
+                    var filterDevice = $.grep(devices, function (device) {
+                        return device.idKod == deviceIdKod;
+                    });
+                    if (filterDevice.length != 0) {
+                        if (ind == devicesArr.length - 1) {
+                            $('#devices-' + bidProduct.productIdKod).append("* " + filterDevice[0].deviceCode + ": " + filterDevice[0].deviceName);
+                        } else {
+                            $('#devices-' + bidProduct.productIdKod).append("* " + filterDevice[0].deviceCode + ": " + filterDevice[0].deviceName + ",<br/> ");
+                        }
+                    }
+                })
+            }
+
+        })
+
+
+
+    });
+
+
+
+</script>
+

@@ -1,0 +1,338 @@
+﻿@using IMandCRM.UI.Models.CustomerRequest
+@model CustomerRequestModel
+@{
+    ViewData["Title"] = "AddRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .form-group {
+        margin-bottom: 15px;
+    }
+</style>
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Talep Oluştur</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Talep Oluştur</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container" style="width:750px;">
+        <div class="card">
+            <!--begin::Form Wizard-->
+            <form class="form" id="kt_modal_customer_request_form" asp-controller="CustomerRequest" asp-action="AddRequest" method="post" enctype="multipart/form-data">
+                <!--begin::Card body-->
+                <div class="card-body p-0">
+                    <div class="wizard wizard-1" id="kt_measurements_add" data-wizard-state="step-first" data-wizard-clickable="true">
+                        <!--begin::Wizard Body-->
+                        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                            <div class="col-xl-12 col-xxl-10">
+                                <!--begin::Step 1-->
+                                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                    <div style="display:flex;align-items:center;justify-content:center;">
+                                        <div class="mb-10 font-weight-bold text-dark" style="font-size: 2rem;font-weight:bold;">İLETİŞİM TALEP FORMU</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="form-group row fv-row">
+                                                <div class="col-lg-12 col-xl-12">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="FirstName" placeholder="Adınız" name="FirstName" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <div class="col-lg-12 col-xl-12">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" asp-for="LastName" placeholder="Soyadınız" name="LastName" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <div class="col-lg-12 col-xl-12">
+                                                    <!--begin::Select-->
+                                                    <select name="UsingSpace" data-control="select2" class="form-select form-select-solid" asp-for="UsingSpace" data-placeholder="Kullanacağınız alan...">
+                                                        <option value="">Kullanacağınız alan</option>
+                                                        <option value="1">Eczane</option>
+                                                        <option value="2">Medikal</option>
+                                                        <option value="3">Optik</option>
+                                                        <option value="4">Güzellik Salonu</option>
+                                                        <option value="5">Güzellik Merkezi</option>
+                                                        <option value="6">Kuaför</option>
+                                                        <option value="7">Diğer</option>
+                                                    </select>
+                                                    <!--end::Select-->
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <div class="col-lg-12 col-xl-12">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" asp-for="PhoneNumber" placeholder="Telefon" name="PhoneNumber" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <div class="col-lg-12 col-xl-12">
+                                                    <input type="email" class="form-control form-control-lg form-control-solid" asp-for="Email" placeholder="E-mail" name="Email" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <div class="col-lg-12 col-xl-12">
+                                                    <div class="form-check form-check-custom">
+                                                        <input class="form-check-input" type="checkbox" name="IsReadClarificationText" asp-for="IsReadClarificationText" id="IsReadClarificationText" />
+                                                        <label class="form-check-label" for="flexCheckChecked">
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_clarification_text">Aydınlatma metni</a>ni okudum ve kabul ediyorum.
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row fv-row">
+                                                <div class="col-lg-12 col-xl-12">
+                                                    <div class="form-check form-check-custom">
+                                                        <input class="form-check-input" type="checkbox" name="ReciveEmail" asp-for="ReciveEmail" checked disabled="disabled" />
+                                                        <label class="form-check-label" for="flexCheckChecked">
+                                                            Tarafımla pazarlama ve tanıtım amaçlı iletişime geçilmesine izin veriyorum.
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>                
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Step 1-->
+
+                            </div>
+                        </div>
+                        <!--end::Wizard Body-->
+                    </div>
+                </div>
+                <!--end::Card body-->
+                <!--begin::Card footer-->
+                <div class="card-footer p-0">
+                    <!--begin::Wrapper-->
+                    <div class="card-px text-center py-5 my-5" style="display:flex;justify-content:center;align-items:center;">
+                        <button type="button" id="kt_modal_customer_request_submit" class="btn btn-warning me-3 w-150px"><i class="far fa-arrow-alt-circle-right"></i>&nbsp;Gönder</button>
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Card footer-->
+            </form>
+            <!--end::Form Wizard-->
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+<!--begin::Modal - Aydınlatma metni-->
+<div class="modal fade" id="kt_modal_clarification_text" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_clarification_text_header">
+                <!--begin::Modal title-->
+                <h2>Aydınlatma Metni</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
+                            </g>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body py-10 px-lg-17">
+                <!--begin::Scroll-->
+                <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_new_address_header" data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
+                    <p>
+                        İNNOVA KİŞİSEL VERİLERİN KORUNMASI POLİTİKASI
+                        6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) uyarınca, Şirketimiz tarafından, Veri Sorumlusu sıfatıyla, kişisel verileriniz, iş amaçlarıyla bağlı olarak, aşağıda açıklandığı çerçevede kullanılmak, kaydedilmek, saklanmak, güncellenmek, aktarılmak ve/veya sınıflandırılmak suretiyle işlenecektir.  Bu kapsamda Şirketimiz tarafından başta özel hayatın gizliliği olmak üzere, kişilerin temel hak ve özgürlüklerini korumak ve kişisel verilerin korunması amacıyla düzenlenen Kanun ve Yönetmelikler gereğince Şirketimiz, kişisel verilerinizin hukuka aykırı olarak işlenmesini önleme, hukuka aykırı olarak erişilmesini önleme ve muhafazasını sağlama amacıyla, uygun güvenlik düzeyini temin etmeye yönelik tüm teknik ve idari tedbirleri almaktadır.
+
+
+
+                        Bu metnin hedef kitlesi, Şirketimiz çalışanları veya Şirketimize iş başvurusu yapmış olan çalışan adayları dışındaki, Şirketimiz tarafından kişisel verileri işlenen tüm gerçek kişilerdir.
+
+
+
+                        Veri sorumlusu sıfatıyla işlenen kişisel verilere, burada belirtilenlerle sınırlı sayıda olmamak üzere aşağıda yer verilmektedir;
+
+                        İsim, soy isim, T.C. kimlik numarası, adres, telefon numarası, e-posta adresi, imza, fiziksel mekan/güvenlik görüntü kaydı, çağrı merkezi/hizmet kalitesi ses kaydı, banka hesap numarası, cookie kayıtları
+
+
+
+                        Kişisel verilerin işlenme amaçları ve hukuki sebepleri; Tarafınızca paylaşılan kişisel verileriniz;
+
+                        Şirketimiz tarafından sunulan ürün ve hizmetlerden sizleri ve/veya temsil ettiğiniz kurum ve kuruluşları faydalandırmak için, Şirketimizin ticari ve iş stratejilerinin belirlenmesi ve uygulanması, pazarlama faaliyetlerinin yapılması, iş geliştirme ve planlama faaliyetlerinin gerçekleştirilmesi dahil ve fakat bunlarla sınırlı olmamak üzere gerekli çalışmaların yürütülmesi,
+                        Şirketimiz tarafından yürütülen iletişime yönelik idari operasyonların yürütülmesi,
+                        Şirketimizin kullanımda olan lokasyonların fiziksel güvenliğinin ve denetiminin sağlanması,
+                        İş ortağı/müşteri/tedarikçi (yetkili veya çalışanları) ilişkilerinin kurulması,
+                        İş ortaklarımız, tedarikçilerimiz veya sair üçüncü kişilerle birlikte sunulan ürün ve hizmetlere ilişkin sözleşme gereklerinin ve finansal mutabakatın sağlanması,
+                        Şirketimizin insan kaynakları politikalarının yürütülmesi,
+                        Şirketimizin çağrı merkezinin aranması veya internet sayfasının kullanılması
+                        ve/veya
+
+                        Şirketimizin düzenlediği eğitim, seminer veya organizasyonlara katılım sağlanması amacıyla işlenecektir.
+                        Kişisel verilerin toplanma ve saklanma yöntemi; Şirketimizle paylaştığınız kişisel verileriniz, otomatik ya da otomatik olmayan yöntemlerle, ofisler, şubeler, çağrı merkezi, internet sitesi, sosyal medya mecraları, mobil uygulamalar ve benzeri vasıtalarla sözlü, yazılı ya da elektronik olarak toplanabilir. Kişisel verileriniz elektronik ve/veya fiziksel ortamlarda saklanacaktır. Şirketimiz tarafından temin edilen ve saklanan kişisel verilerinizin saklandıkları ortamlarda yetkisiz erişime maruz kalmamaları, manipülasyona uğramamaları, kaybolmamaları ve zarar görmemeleri amacıyla gereken iş süreçlerinin tasarımı ile teknik güvenlik altyapı geliştirmeleri uygulanmaktadır.
+
+                        Kişisel verileriniz, size bildirilen amaçlar ve kapsam dışında kullanılmamak kaydı ile gerekli tüm bilgi güvenliği tedbirleri de alınarak işlenecek ve yasal saklama süresince veya böyle bir süre öngörülmemişse işleme amacının gerekli kıldığı süre boyunca saklanacak ve işlenecektir. Bu süre sona erdiğinde, kişisel verileriniz silinme, yok edilme ya da anonimleştirme yöntemleri ile Şirketimizin veri akışlarından çıkarılacaktır.
+
+
+
+                        Kişisel Verilerin aktarılması;
+
+                        Kişisel verileriniz, Kanunlar ve sair mevzuat kapsamında ve açıklanan amaçlarla;
+
+                        Türk Telekomünikasyon A.Ş. ve Türk Telekomünikasyon grup şirketlerine,
+                        Yetki vermiş olduğumuz, Şirketimiz nam ve hesabına faaliyette bulunan şirketler, temsilcilerimize,
+                        Düzenleyici ve denetleyici kurumlara, kişisel verilerinizi tabi olduğu kanunlarında açıkça talep etmeye yetkili olan kamu kurum veya kuruluşlara,
+                        Belirtilen amaçlar kapsamında iş ortaklıkları, tedarikçi ve yüklenici şirketler, bankalar, kredi risk ve finans kuruluşları ve sair gerçek veya tüzel kişilere,
+                        Vergi ve benzeri danışmanlara, yasal takip süreçleri ile ilgili zorunlu kişilere, kurum ve kuruluşlara ve denetimciler de dâhil olmak üzere danışmanlık aldığımız üçüncü kişilere ve bunlarla sınırlı olmaksızın, yurt içinde ve yurt dışında, yukarıda belirtilen amaçlarla iş ortakları, hizmet alınan üçüncü kişi, yetkilendirilen kişi ve kuruluşlara aktarılabilecektir.
+                        KVKK’nın 11. maddesi gereği haklarınız; Şirketimize başvurarak, kişisel verilerinizin;
+
+                        İşlenip işlenmediğini öğrenme,
+                        İşlenmişse bilgi talep etme,
+                        İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme,
+                        Yurt içinde / yurt dışında aktarıldığı 3. kişileri bilme,
+                        Eksik / yanlış işlenmişse düzeltilmesini isteme,
+                        KVKK’nın 7. maddesinde öngörülen şartlar çerçevesinde silinmesini / yok edilmesini isteme,
+                        Aktarıldığı 3. kişilere yukarıda sayılan (e) ve (f) bentleri uyarınca yapılan işlemlerin bildirilmesini isteme,
+                        Münhasıran otomatik sistemler ile analiz edilmesi nedeniyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme,
+                        Kanuna aykırı olarak işlenmesi sebebiyle zarara uğramanız hâlinde zararın giderilmesini talep etme haklarına sahipsiniz.
+                        KVK Kanunu’nun 13. maddesinin 1. fıkrası gereğince, yukarıda belirtilen haklarınızı kullanmak ile ilgili talebinizi, yazılı olarak veya Kişisel Verileri Koruma Kurulu’nun belirlediği diğer yöntemlerle Şirketimize iletebilirsiniz.
+
+
+
+                        Yukarıda belirtilen haklarınızı kullanmak için kimliğinizi tespit edici gerekli bilgiler ile talep dilekçenizi bizzat elden teslim edebilir, noter kanalıyla veya Kişisel Verileri Koruma Kurulu tarafından belirlenen diğer yöntemler ile gönderebilir veya innova@hs03.kep.tr adresine güvenli elektronik imzalı olarak iletebilirsiniz.
+                    </p>
+                </div>
+                <!--end::Scroll-->
+            </div>
+            <!--end::Modal body-->
+
+        </div>
+    </div>
+</div>
+<!--end::Modal - Aydınlatma metni-->
+@section Scripts
+{
+
+    <script>
+            Inputmask({
+                "mask": "(999) 999-9999"
+            }).mask(".PhoneMask");
+
+            $(function () {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                };
+
+                var msg;
+                if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+                    msg = '@Html.Raw((string)TempData["message"])';
+                    if (msg != null) {
+                        msgArr = msg.split('|');
+                        if (msgArr[1] == "success") {
+                            toastr.success(msgArr[0]);
+                        } else if (msgArr[1] == "error") {
+                            toastr.error(msgArr[0]);
+                        } else if (msgArr[1] == "warning") {
+                            toastr.warning(msgArr[0]);
+                        } else if (msgArr[1] == "info") {
+                            toastr.info(msgArr[0]);
+                        }
+
+                    }
+                }
+
+                $("#kt_modal_customer_request_submit").on("click", function () {
+
+                    var isValid = FormValidation();
+                    if (isValid) {
+                        $('#kt_modal_customer_request_form').submit();
+                    }
+
+                });
+
+                function FormValidation() {
+
+                    var isValid = true;
+                    if ($('[name="FirstName"]').val() == "") {
+                        toastr.warning("Adınızı giriniz.");
+                        isValid = false;
+                    }
+                    if ($('[name="LastName"]').val() == "") {
+                        toastr.warning("Soyadınızı giriniz.");
+                        isValid = false;
+                    }
+                    if ($('[name="UsingSpace"]').val() == "") {
+                        toastr.warning("Kullanacağınız alanı seçiniz.");
+                        isValid = false;
+                    }
+                    if ($('[name="PhoneNumber"]').val() == "") {
+                        toastr.warning("Telefon numaranızı giriniz.");
+                        isValid = false;
+                    }
+
+                    if (!$("[name='IsReadClarificationText']").prop('checked')) {
+                        toastr.warning("Aydınlatma metnini şartlarını kabul ediniz.");
+                        isValid = false;
+                    }
+                    if (isEmail($("[name='Email']").val()) == false && $('[name="Email"]').val() != "") {
+                        toastr.warning("Mail adresinizi uygun formatta giriniz.");
+                        isValid = false;
+                    }
+                    return isValid;
+                }
+
+            });
+
+            function isEmail(email) {
+                var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                return regex.test(email);
+            }
+
+    </script>
+
+}
+

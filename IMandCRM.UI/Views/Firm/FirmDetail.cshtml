@@ -1,0 +1,319 @@
+﻿@model FirmModel
+@{
+    ViewData["Title"] = "FirmDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Firma Detay</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="/Firm/Firms" class="text-muted text-hover-primary">Firma Listesi</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Firma Detay</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container">
+        <!--begin::Navbar-->
+        <div class="card mb-9">
+            <div class="card-body pt-9 pb-0">
+                <div class="separator"></div>
+                <!--begin::Nav wrapper-->
+                <div class="d-flex overflow-auto h-55px">
+                    <!--begin::Nav links-->
+                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
+                        <!--begin::Nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary me-6 active" href="/Firm/FirmDetail?idKod=@Model.IdKod">Genel Bilgiler</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary me-6" href="/Firm/FirmAddresses?firmIdKod=@Model.IdKod">Adres Bilgileri</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary me-6" href="/Firm/FirmManagers?firmIdKod=@Model.IdKod">Yönetici Bilgileri</a>
+                        </li>
+                        <!--end::Nav item-->
+                    </ul>
+                    <!--end::Nav links-->
+                </div>
+                <!--end::Nav wrapper-->
+            </div>
+        </div>
+        <!--end::Navbar-->
+        <!--begin::Card-->
+        <div class="card">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Card title-->
+                <div class="card-title fs-3 fw-bolder">Firma Bilgileri</div>
+                <!--end::Card title-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Form-->
+            <form id="kt_firms_edit_form" class="form" asp-controller="Firm" asp-action="FirmEdit" method="post" enctype="multipart/form-data">
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+                    <!--begin::Wrapper-->
+                    <div class="w-100">
+                        <!--begin::Hidden input-->
+                        <input type="hidden" asp-for="IdKod" name="IdKod" />
+                        <!--end::Hidden input-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold form-label required">Firma Adı</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="FirmName" asp-for="FirmName" placeholder="" class="form-control form-control-lg form-control-solid" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold form-label">Firma Unvanı</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="TradeName" asp-for="TradeName" placeholder="" class="form-control form-control-lg form-control-solid" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row g-9 mb-10">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label">Vergi Dairesi</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="" asp-for="TaxOffice" name="TaxOffice" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label">Vergi Numarası</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-lg form-control-solid TaxNumberMask" placeholder="" asp-for="TaxNumber" name="TaxNumber" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row g-9 mb-10">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label">E-Mail</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="email" class="form-control form-control-lg form-control-solid" placeholder="" asp-for="FirmEMail" name="FirmEMail" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label">Fax</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="FaxNumber" name="FaxNumber" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row g-9 mb-10">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label">Telefon 1</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="PhoneNumber1" name="PhoneNumber1" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label">Telefon 2</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="PhoneNumber2" name="PhoneNumber2" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row g-9 mb-10">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label">Gsm 1</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="Gsm1" name="Gsm1" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label">Gsm 2</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="Gsm2" name="Gsm2" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold form-label">Logo</label>
+                            <!--end::Label-->
+                            <div class="col-lg-12">
+                                <!--begin::Image input-->
+                                <div class="image-input image-input-outline ml-1" data-kt-image-input="true" style="background-image: url(/assets/media/firms/@Model.FirmLogo)">
+                                    <!--begin::Preview existing avatar-->
+                                    <div class="image-input-wrapper w-250px h-100px" style="background-image: url(/assets/media/firms/@Model.FirmLogo)"></div>
+                                    <!--end::Preview existing avatar-->
+                                    <!--begin::Label-->
+                                    <label class="btn btn-icon btn-active-color-primary w-50px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Fotoğraf Değiştir">
+                                        <i class="bi bi-plus-circle-fill"><span style="font-style:normal;">Ekle</span></i>
+                                        <!--begin::Inputs-->
+                                        <input type="file" name="FirmLogo" asp-for="FirmLogo" accept=".png, .jpg, .jpeg" />
+                                        <input type="hidden" name="firmPhoto_remove" />
+                                        <!--end::Inputs-->
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Cancel-->
+                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Fotoğraf İptal">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                    <!--end::Cancel-->
+                                    <!--begin::Remove-->
+                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Fotoğraf Sil">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                    <!--end::Remove-->
+                                </div>
+                                <!--end::Image input-->
+                                <!--begin::Hint-->
+                                <div class="form-text">Fotoğraf tipi: png, jpg, jpeg.</div>
+                                <!--end::Hint-->
+                            </div>
+                        </div>
+                        <!--end::Input group-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Card body-->
+                <!--begin::Card footer-->
+                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                    <button type="submit" class="btn btn-success" id="kt_edit_firm_submit">Güncelle</button>
+                </div>
+                <!--end::Card footer-->
+            </form>
+            <!--end:Form-->
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+
+@section Scripts
+{
+    <script src="~/assets/js/custom/apps/firms/edit.js"></script>
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+        };
+
+        var msg;
+        if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+            msg = '@Html.Raw((string)TempData["message"])';
+            if (msg != null) {
+                msgArr = msg.split('|');
+                if (msgArr[1] == "success") {
+                    toastr.success(msgArr[0]);
+                } else if (msgArr[1] == "error") {
+                    toastr.error(msgArr[0]);
+                } else if (msgArr[1] == "warning") {
+                    toastr.warning(msgArr[0]);
+                } else if (msgArr[1] == "info") {
+                    toastr.info(msgArr[0]);
+                }
+
+            }
+        }
+        Inputmask({
+            "mask": "(999) 999-9999"
+        }).mask(".PhoneMask");
+
+        Inputmask({
+            "mask": "9",
+            "repeat": 10,
+            "greedy": false
+        }).mask(".TaxNumberMask");
+
+    </script>
+
+}

@@ -1,0 +1,539 @@
+﻿@model FirmAddModel
+@{
+    ViewData["Title"] = "FirmAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">Firma</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="/Home/Index" class="text-muted text-hover-primary">Anasayfa</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-dark">Firma Ekle</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container">
+
+        <!--begin::Card-->
+        <div class="card">
+            <!--begin::Card body-->
+            <div class="card-body">
+                <!--begin::Stepper-->
+                <div class="stepper stepper-links d-flex flex-column" id="kt_create_firm_stepper">
+                    <!--begin::Nav-->
+                    <div class="stepper-nav py-5 mt-5">
+                        <!--begin::Step 1-->
+                        <div class="stepper-item current" data-kt-stepper-element="nav">
+                            <h3 class="stepper-title">Firma Bilgileri</h3>
+                        </div>
+                        <!--end::Step 1-->
+                        <!--begin::Step 2-->
+                        <div class="stepper-item" data-kt-stepper-element="nav">
+                            <h3 class="stepper-title">Adres Bilgileri</h3>
+                        </div>
+                        <!--end::Step 2-->
+                        <!--begin::Step 3-->
+                        <div class="stepper-item" data-kt-stepper-element="nav">
+                            <h3 class="stepper-title">Yönetici Bilgisi</h3>
+                        </div>
+                        <!--end::Step 3-->
+                    </div>
+                    <!--end::Nav-->
+                    <!--begin::Form-->
+                    <form class="mx-auto mw-1000px w-100 pt-15 pb-10" novalidate="novalidate" id="kt_create_firm_form" asp-controller="Firm" asp-action="FirmAdd" method="post" enctype="multipart/form-data">
+                        <!--begin::Step 1-->
+                        <div class="current" data-kt-stepper-element="content">
+                            <!--begin::Wrapper-->
+                            <div class="w-100">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label required">Firma Adı</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" name="FirmName" asp-for="FirmName" placeholder="" class="form-control form-control-lg form-control-solid" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label">Firma Unvanı</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" name="TradeName" asp-for="TradeName" placeholder="" class="form-control form-control-lg form-control-solid" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="row g-9 mb-10">
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label">Vergi Dairesi</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid" placeholder="" asp-for="TaxOffice" name="TaxOffice" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label">Vergi Numarası</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid TaxNumberMask" placeholder="" asp-for="TaxNumber" name="TaxNumber" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="row g-9 mb-10">
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label">E-Mail</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="email" class="form-control form-control-lg form-control-solid" placeholder="" asp-for="FirmEMail" name="FirmEMail" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label">Fax</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="FaxNumber" name="FaxNumber" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="row g-9 mb-10">
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label">Telefon 1</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="PhoneNumber1" name="PhoneNumber1" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label">Telefon 2</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="PhoneNumber2" name="PhoneNumber2" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="row g-9 mb-10">
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label">Gsm 1</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="Gsm1" name="Gsm1" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label">Gsm 2</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid PhoneMask" placeholder="" asp-for="Gsm2" name="Gsm2" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label">Logo</label>
+                                    <!--end::Label-->
+                                    <div class="col-lg-12">
+                                        <!--begin::Image input-->
+                                        <div class="image-input image-input-outline ml-1" data-kt-image-input="true" style="background-image: url(/assets/media/firms/default.png)">
+                                            <!--begin::Preview existing avatar-->
+                                            <div class="image-input-wrapper w-250px h-100px" style="background-image: url(/assets/media/firms/default.png)"></div>
+                                            <!--end::Preview existing avatar-->
+                                            <!--begin::Label-->
+                                            <label class="btn btn-icon btn-active-color-primary w-50px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Fotoğraf Değiştir">
+                                                <i class="bi bi-plus-circle-fill"><span style="font-style:normal;">Ekle</span></i>
+                                                <!--begin::Inputs-->
+                                                <input type="file" name="FirmLogo" asp-for="FirmLogo" accept=".png, .jpg, .jpeg" />
+                                                <input type="hidden" name="firmPhoto_remove" />
+                                                <!--end::Inputs-->
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Cancel-->
+                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Fotoğraf İptal">
+                                                <i class="bi bi-x fs-2"></i>
+                                            </span>
+                                            <!--end::Cancel-->
+                                            <!--begin::Remove-->
+                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Fotoğraf Sil">
+                                                <i class="bi bi-x fs-2"></i>
+                                            </span>
+                                            <!--end::Remove-->
+                                        </div>
+                                        <!--end::Image input-->
+                                        <!--begin::Hint-->
+                                        <div class="form-text">Fotoğraf tipi: png, jpg, jpeg.</div>
+                                        <!--end::Hint-->
+                                    </div>
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 1-->
+                        <!--begin::Step 2-->
+                        <div data-kt-stepper-element="content">
+                            <!--begin::Wrapper-->
+                            <div class="w-100">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label required">Adres Başlık</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" name="AddressTitle" asp-for="AddressTitle" placeholder="Örnek: Evim, İş yeri, vb." class="form-control form-control-lg form-control-solid" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="row g-9 mb-10">
+                                    <!--begin::Col-->
+                                    <div class="col-md-4 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label required">Ülke</label>
+                                        <!--end::Label-->
+                                        <!--begin::Select-->
+                                        <select name="CountryId" asp-for="CountryId" data-control="select2" data-placeholder="Ülke Seçiniz..." class="form-select form-select-solid">
+                                            <option value="">Ülke Seçiniz...</option>
+                                        </select>
+                                        <!--end::Select-->
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col-md-4 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label required">İl</label>
+                                        <!--end::Label-->
+                                        <!--begin::Select-->
+                                        <select name="CityId" asp-for="CityId" data-control="select2" data-placeholder="İl Seçiniz..." class="form-select form-select-solid">
+                                            <option value="">İl Seçiniz...</option>
+                                        </select>
+                                        <!--end::Select-->
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col-md-4 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold form-label required">İlçe</label>
+                                        <!--end::Label-->
+                                        <!--begin::Select-->
+                                        <select name="DistrictId" asp-for="DistrictId" data-control="select2" data-placeholder="İlçe Seçiniz..." class="form-select form-select-solid">
+                                            <option value="">İlçe Seçiniz...</option>
+                                        </select>
+                                        <!--end::Select-->
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label required">Detay</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <textarea name="AddressDescription" asp-for="AddressDescription" rows="3" placeholder="Mahalle, sokak, cadde ve diğer bilgilerinizi giriniz" class="form-control form-control-lg form-control-solid"></textarea>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 2-->
+                        <!--begin::Step 3-->
+                        <div data-kt-stepper-element="content">
+                            <!--begin::Wrapper-->
+                            <div class="w-100">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label required">Ad</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" name="FirstName" asp-for="FirstName" class="form-control form-control-lg form-control-solid" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label required">Soyad</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" name="LastName" asp-for="LastName" class="form-control form-control-lg form-control-solid" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label required">E-Mail</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="email" name="EMail" asp-for="EMail" class="form-control form-control-lg form-control-solid" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label">Unvan</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" name="Title" asp-for="Title" class="form-control form-control-lg form-control-solid" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 3-->
+                        <!--begin::Actions-->
+                        <div class="d-flex flex-stack pt-15">
+                            <!--begin::Wrapper-->
+                            <div class="mr-2">
+                                <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
+                                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Left-2.svg-->
+                                    <span class="svg-icon svg-icon-4 me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000)" x="14" y="7" width="2" height="10" rx="1" />
+                                                <path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997)" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->Geri
+                                </button>
+                            </div>
+                            <!--end::Wrapper-->
+                            <!--begin::Wrapper-->
+                            <div>
+                                <button type="button" class="btn btn-lg btn-primary me-3" data-kt-stepper-action="submit">
+                                    <span class="indicator-label">
+                                        Kaydet
+                                        <!--begin::Svg Icon | path: icons/duotone/Navigation/Right-2.svg-->
+                                        <span class="svg-icon svg-icon-3 ms-2 me-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <rect fill="#000000" opacity="0.5" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
+                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="indicator-progress">
+                                        Lütfen bekleyiniz...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
+                                    İleri
+                                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Right-2.svg-->
+                                    <span class="svg-icon svg-icon-4 ms-1 me-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <rect fill="#000000" opacity="0.5" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
+                                                <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </button>
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Stepper-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Card-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+@section Scripts
+{
+
+    <script src="~/assets/js/custom/apps/firms/add.js"></script>
+
+    <script>
+        $(async function () {
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut",
+    };
+
+      
+        Inputmask({
+            "mask": "(999) 999-9999"
+        }).mask(".PhoneMask");
+
+        Inputmask({
+            "mask": "9",
+            "repeat": 10,
+            "greedy": false
+        }).mask(".TaxNumberMask");
+
+        var msg;
+        if ('@TempData["message"]' != undefined && '@TempData["message"]' != "") {
+            msg = '@Html.Raw((string)TempData["message"])';
+            if (msg != null) {
+                msgArr = msg.split('|');
+                if (msgArr[1] == "success") {
+                    toastr.success(msgArr[0]);
+                } else if (msgArr[1] == "error") {
+                    toastr.error(msgArr[0]);
+                } else if (msgArr[1] == "warning") {
+                    toastr.warning(msgArr[0]);
+                } else if (msgArr[1] == "info") {
+                    toastr.info(msgArr[0]);
+                }
+
+            }
+        }
+
+        var countries=@Html.Raw(Json.Serialize(Model.Countries));
+        var cities=@Html.Raw(Json.Serialize(Model.Cities));
+        var districts=@Html.Raw(Json.Serialize(Model.Districts));
+
+            $.each(countries, function (ind, val) {
+                if (val.countryId == 208) {
+                    $('[name="CountryId"]').append(`<option value=${val.countryId} selected='selected'>${val.countryName}</option>`);
+                } else {
+                    $('[name="CountryId"]').append(`<option value=${val.countryId}>${val.countryName}</option>`);
+                }
+            });
+
+            $.each(cities, function (ind, val) {
+                $('[name="CityId"]').append(`<option value=${val.cityId}>${val.cityName}</option>`);
+            });
+
+            $('[name="CountryId"]').on('change', function (e) {
+                e.preventDefault();
+                var countryId = e.target.value;
+                console.log(countryId);
+                var filterCities = $.grep(cities, function (v) {
+                    return v.countryId == countryId;
+                });
+                $('[name="CityId"]').html(`<option value="">İl Seçiniz...</option>`);
+                $.each(filterCities, function (ind, val) {
+                    $('[name="CityId"]').append(`<option value=${val.cityId}>${val.cityName}</option>`);
+                });
+
+            });
+
+            $('[name="CityId"]').on('change', function (e) {
+                e.preventDefault();
+                var cityId = e.target.value;
+                var filterDistricts = $.grep(districts, function (v) {
+                    return v.cityId == cityId;
+                });
+                $('[name="DistrictId"]').html(`<option value="">İlçe Seçiniz</option>`);
+                $.each(filterDistricts, function (ind, val) {
+                    $('[name="DistrictId"]').append(`<option value=${val.districtId}>${val.districtName}</option>`);
+                });
+
+            });
+
+            $('[name="DistrictId"]').on('change', function (e) {
+                e.preventDefault();
+                var districtId = e.target.value;
+                console.log(districtId);
+            });
+
+        });
+
+    </script>
+
+
+}
+
+
